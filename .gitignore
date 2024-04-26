@@ -1,3 +1,11 @@
+Source/wipeout
+build
+wipeout.pdx
+Source/pdex.dylib
+Source/pdex.elf
+Source/Track01.wav
+
+
 # Prerequisites
 *.d
 
