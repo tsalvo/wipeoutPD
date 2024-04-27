@@ -432,20 +432,11 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.gt3->color[2]
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.gt3->color[1]
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.gt3->color[0]
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, 0, pd);
+			}, pd);
 
 			poly.gt3 += 1;
 			break;
@@ -458,36 +449,18 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.gt4->color[2]
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.gt4->color[1]
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.gt4->color[0]
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, 0, pd);
+			}, pd);
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.gt4->color[2]
-					},
-					{
-						.pos = vertex[coord3],
-						.color = poly.gt4->color[3]
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.gt4->color[1]
-					},
+					vertex[coord2],
+					vertex[coord3],
+					vertex[coord1]
 				}
-			}, 0, pd);
+			}, pd);
 
 			poly.gt4 += 1;
 			break;
@@ -499,20 +472,11 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.ft3->color
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.ft3->color
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.ft3->color
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, 0, pd);
+			}, pd);
 
 			poly.ft3 += 1;
 			break;
@@ -525,36 +489,18 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.ft4->color
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.ft4->color
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.ft4->color
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, 0, pd);
+			}, pd);
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.ft4->color
-					},
-					{
-						.pos = vertex[coord3],
-						.color = poly.ft4->color
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.ft4->color
-					},
+					vertex[coord2],
+					vertex[coord3],
+					vertex[coord1]
 				}
-			}, 0, pd);
+			}, pd);
 
 			poly.ft4 += 1;
 			break;
@@ -566,20 +512,11 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.g3->color[2]
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.g3->color[1]
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.g3->color[0]
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, RENDER_NO_TEXTURE, pd);
+			}, pd);
 
 			poly.g3 += 1;
 			break;
@@ -592,36 +529,18 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.g4->color[2]
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.g4->color[1]
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.g4->color[0]
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, RENDER_NO_TEXTURE, pd);
+			}, pd);
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.g4->color[2]
-					},
-					{
-						.pos = vertex[coord3],
-						.color = poly.g4->color[3]
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.g4->color[1]
-					},
+					vertex[coord2],
+					vertex[coord3],
+					vertex[coord1]
 				}
-			}, RENDER_NO_TEXTURE, pd);
+			}, pd);
 
 			poly.g4 += 1;
 			break;
@@ -633,20 +552,11 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.f3->color
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.f3->color
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.f3->color
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, RENDER_NO_TEXTURE, pd);
+			}, pd);
 
 			poly.f3 += 1;
 			break;
@@ -659,36 +569,18 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.f4->color
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.f4->color
-					},
-					{
-						.pos = vertex[coord0],
-						.color = poly.f4->color
-					},
+					vertex[coord2],
+					vertex[coord1],
+					vertex[coord0]
 				}
-			}, RENDER_NO_TEXTURE, pd);
+			}, pd);
 			render_push_tris((tris_t) {
 				.vertices = {
-					{
-						.pos = vertex[coord2],
-						.color = poly.f4->color
-					},
-					{
-						.pos = vertex[coord3],
-						.color = poly.f4->color
-					},
-					{
-						.pos = vertex[coord1],
-						.color = poly.f4->color
-					},
+					vertex[coord2],
+					vertex[coord3],
+					vertex[coord1]
 				}
-			}, RENDER_NO_TEXTURE, pd);
+			}, pd);
 
 			poly.f4 += 1;
 			break;

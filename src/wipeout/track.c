@@ -150,10 +150,10 @@ void track_load_faces(char *file_name, vec3_t *vertices, PlaydateAPI *pd) {
 		rgba_t color = rgba_from_u32(get_u32(bytes, &p));
 		// const vec2_t *uv = track_uv[flags_is(tf->flags, FACE_FLIP_TEXTURE) ? 1 : 0];
 		tf->color = (rgb_t){.r = color.r, .g = color.g, .b = color.b};
-		tf->tris[0] = (tris_uncolored_t){
+		tf->tris[0] = (tris_t){
 			.vertices = {v0, v1, v2}
 		};
-		tf->tris[1] = (tris_uncolored_t){
+		tf->tris[1] = (tris_t){
 			.vertices = {v3, v0, v2}
 		};
 		tf++;
@@ -243,8 +243,8 @@ void track_draw_section(section_t *section, PlaydateAPI *pd) {
 	int16_t face_count = section->face_count;
 	
 	for (int16_t j = 0; j < face_count; j++) {
-		render_push_tris_rgb(face->tris[0], face->color, pd);
-		render_push_tris_rgb(face->tris[1], face->color, pd);
+		render_push_tris(face->tris[0], pd);
+		render_push_tris(face->tris[1], pd);
 		face++;
 	}
 }

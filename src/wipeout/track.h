@@ -15,7 +15,7 @@
 #define TRACK_SEARCH_LOOK_AHEAD 6
 
 typedef struct track_face_t {
-	tris_uncolored_t tris[2];
+	tris_t tris[2];
 	rgb_t color;
 	vec3_t normal;
 	uint8_t flags;

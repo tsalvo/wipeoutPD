@@ -418,20 +418,11 @@ void ship_draw_shadow(ship_t *self, PlaydateAPI *pd) {
 	rgba_t color = rgba(0 , 0 , 0, 128);
 	render_push_tris((tris_t) {
 		.vertices = {
-			{
-				.pos = {wngl.x, wngl.y, wngl.z},
-				.color = color,
-			},
-			{
-				.pos = {wngr.x, wngr.y, wngr.z},
-				.color = color
-			},
-			{
-				.pos = {nose.x, nose.y, nose.z},
-				.color = color
-			},
+			{wngl.x, wngl.y, wngl.z},
+			{wngr.x, wngr.y, wngr.z},
+			{nose.x, nose.y, nose.z},
 		}
-	}, 0, pd);
+	}, pd);
 }
 
 void ship_update(ship_t *self) {

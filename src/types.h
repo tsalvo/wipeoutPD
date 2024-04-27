@@ -27,11 +27,9 @@ typedef struct {
 	float x, y;
 } vec2_t;
 
-
 typedef struct {
 	int32_t x, y;
 } vec2i_t;
-
 
 typedef struct {
 	float x, y, z;
@@ -43,17 +41,7 @@ typedef union {
 } mat4_t;
 
 typedef struct {
-	vec3_t pos;
-	// vec2_t uv;
-	rgba_t color;
-} vertex_t;
-
-typedef struct {
 	vec3_t vertices[3];
-} tris_uncolored_t;
-
-typedef struct {
-	vertex_t vertices[3];
 } tris_t;
 
 #define rgb(R, G, B) ((rgb_t){.r = R, .g = G, .b = B})

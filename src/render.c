@@ -17,7 +17,6 @@ static mat4_t mvp_mat = mat4_identity();
 static mat4_t projection_mat = mat4_identity();
 static mat4_t sprite_mat = mat4_identity();
 
-uint16_t RENDER_NO_TEXTURE;
 void render_init(PlaydateAPI *pd, uint8_t scale) {
 	render_set_screen_size(pd, scale);
 }
@@ -41,7 +40,7 @@ void render_set_screen_size(PlaydateAPI *pd, uint8_t scale) {
 
 void render_frame_prepare(PlaydateAPI *pd) {
 	// TODO: why can't we use `pd->graphics->clear(kColorWhite)` - it fails to build - ?
-	pd->graphics->fillRect(0, 0, pd->display->getWidth(), pd->display->getHeight(), kColorWhite); // clear screen 
+	pd->graphics->fillRect(0, 0, screen_size.x, screen_size.y, kColorWhite); // clear screen 
 }
 
 
@@ -83,40 +82,19 @@ void render_set_depth_write(bool enabled) {}
 void render_set_depth_test(bool enabled) {}
 void render_set_depth_offset(float offset) {}
 void render_set_screen_position(vec2_t pos) {}
-void render_set_blend_mode(render_blend_mode_t mode) {}
 void render_set_cull_backface(bool enabled) {}
 
 vec3_t render_transform(vec3_t pos) {
 	return vec3_transform(vec3_transform(pos, &view_mat), &projection_mat);
 }
 
-void render_push_tris_rgb(tris_uncolored_t tris, rgb_t color, PlaydateAPI *pd) {
+void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	float w2 = screen_size.x * 0.5;
 	float h2 = screen_size.y * 0.5;
-	
+
 	vec3_t p0 = vec3_transform(tris.vertices[0], &mvp_mat);
 	vec3_t p1 = vec3_transform(tris.vertices[1], &mvp_mat);
 	vec3_t p2 = vec3_transform(tris.vertices[2], &mvp_mat);
-	if (p0.z >= 1.0 || p1.z >= 1.0 || p2.z >= 1.0) {
-		return;
-	}
-	
-	vec2i_t sc0 = vec2i(p0.x * w2 + w2, h2 - p0.y * h2);
-	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
-	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
-	
-	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
-}
-
-void render_push_tris(tris_t tris, uint16_t texture_index, PlaydateAPI *pd) {
-	float w2 = screen_size.x * 0.5;
-	float h2 = screen_size.y * 0.5;
-
-	vec3_t p0 = vec3_transform(tris.vertices[0].pos, &mvp_mat);
-	vec3_t p1 = vec3_transform(tris.vertices[1].pos, &mvp_mat);
-	vec3_t p2 = vec3_transform(tris.vertices[2].pos, &mvp_mat);
 	if (p0.z >= 1.0 || p1.z >= 1.0 || p2.z >= 1.0) {
 		return;
 	}
