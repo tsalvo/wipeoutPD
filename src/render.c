@@ -88,7 +88,8 @@ vec3_t render_transform(vec3_t pos) {
 	return vec3_transform(vec3_transform(pos, &view_mat), &projection_mat);
 }
 
-void render_push_tris(tris_t tris, PlaydateAPI *pd) {
+void render_push_tris(tris_t tris, bool color, PlaydateAPI *pd) {
+	
 	float w2 = screen_size.x * 0.5;
 	float h2 = screen_size.y * 0.5;
 
@@ -102,7 +103,17 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	vec2i_t sc0 = vec2i(p0.x * w2 + w2, h2 - p0.y * h2);
 	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
 	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
-
+	
+	// alternating fill
+	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, color ? kColorBlack : kColorWhite);
+	
+	// hybrid (slow)
+	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, kColorWhite);
+	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
+	// pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
+	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
+	
+	// wireframe
 	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
 	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
 	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
@@ -124,7 +135,21 @@ void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
 	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
 	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
 	vec2i_t sc3 = vec2i(p3.x * w2 + w2, h2 - p3.y * h2);
+	
+	// alternating fill
+	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, kColorBlack);
+	// pd->graphics->fillTriangle(sc1.x, sc1.y, sc2.x, sc2.y, sc3.x, sc3.y, kColorWhite);
 
+	// hybrid (slow)
+	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, kColorWhite);
+	// pd->graphics->fillTriangle(sc1.x, sc1.y, sc2.x, sc2.y, sc3.x, sc3.y, kColorWhite);
+	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
+	// pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
+	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
+	// pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, 1, kColorBlack);
+	// pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, 1, kColorBlack);
+	
+	// wireframe
 	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
 	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
 	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);

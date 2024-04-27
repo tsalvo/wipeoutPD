@@ -15,7 +15,7 @@
 #define TARGET_FPS 30.0
 
 static uint8_t scale = 1;
-static bool draw_scenery = false;
+static bool draw_scenery = true;
 
 static int update(void* userdata);
 static void scaleOptionsCallback(void* userdata);
@@ -36,7 +36,7 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 		playdate->system->removeAllMenuItems();
 		const char *scaleOptions[] = {"1", "2", "4"};
 		optionMenuItem = pd->system->addOptionsMenuItem("Scale", scaleOptions, 3, scaleOptionsCallback, NULL);
-		drawSceneryMenuItem = pd->system->addCheckmarkMenuItem("Scenery", 0, sceneryCheckboxCallback, NULL);
+		drawSceneryMenuItem = pd->system->addCheckmarkMenuItem("Scenery", 1, sceneryCheckboxCallback, NULL);
 		playTrack01(playdate);
 		system_init(playdate, scale, TARGET_FPS);
 		playdate->system->setUpdateCallback(update, playdate);

@@ -12,7 +12,6 @@
 
 void track_load(const char *base_path, PlaydateAPI *pd) {
 	// Load and assemble high res track tiles
-	pd->system->logToConsole("track_load");
 	g.track.textures.start = 0;
 	g.track.textures.len = 0;
 
@@ -241,9 +240,9 @@ void track_draw_section(section_t *section, PlaydateAPI *pd) {
 	track_face_t *face = g.track.faces + section->face_start;
 	int16_t face_count = section->face_count;
 	
-	for (int16_t j = 0; j < face_count; j++) {
-		render_push_tris(face->tris[0], pd);
-		render_push_tris(face->tris[1], pd);
+	for (uint16_t j = 0; j < face_count; j++) {
+		render_push_tris(face->tris[0], false, pd);
+		render_push_tris(face->tris[1], true, pd);
 		face++;
 	}
 }

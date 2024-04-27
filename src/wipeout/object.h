@@ -5,6 +5,7 @@
 #include "../render.h"
 #include "../utils.h"
 #include "pd_api.h"
+#include <stdint.h>
 
 // Primitive Structure Stub ( Structure varies with primitive type )
 
@@ -244,7 +245,7 @@ typedef struct Object {
 	// int16_t normals_len; // Number of Normals
 	// vec3_t *normals; // Pointer to 3D Normals
 
-	int16_t primitives_len; // Number of Primitives
+	uint16_t primitives_len; // Number of Primitives
 	Primitive *primitives; // Pointer to Z Sort Primitives
 
 	vec3_t origin;

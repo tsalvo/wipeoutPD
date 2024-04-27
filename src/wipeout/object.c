@@ -419,7 +419,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 
 	// TODO: check for PRM_SINGLE_SIDED
 
-	for (int i = 0; i < primitives_len; i++) {
+	for (uint16_t i = 0; i < primitives_len; i++) {
 		int coord0;
 		int coord1;
 		int coord2;
@@ -436,7 +436,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, pd);
+			}, i & 0x0001 == 1, pd);
 
 			poly.gt3 += 1;
 			break;
@@ -469,7 +469,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, pd);
+			}, i & 0x0001 == 1, pd);
 
 			poly.ft3 += 1;
 			break;
@@ -502,7 +502,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, pd);
+			}, i & 0x0001 == 1, pd);
 
 			poly.g3 += 1;
 			break;
@@ -535,7 +535,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, pd);
+			}, i & 0x0001 == 1, pd);
 
 			poly.f3 += 1;
 			break;

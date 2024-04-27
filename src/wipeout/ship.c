@@ -143,6 +143,28 @@ void ships_reset_exhaust_plumes(void) {
 
 
 void ships_draw(PlaydateAPI *pd) {
+	// Shadows
+	render_set_model_mat(&mat4_identity());
+	
+	render_set_depth_write(false);
+	render_set_depth_offset(-32.0);
+	
+	for (int i = 0; i < len(g.ships); i++) {
+		if (
+			(g.race_type == RACE_TYPE_TIME_TRIAL && i != g.pilot) ||
+			flags_not(g.ships[i].flags, SHIP_VISIBLE) || 
+			flags_is(g.ships[i].flags, SHIP_FLYING)
+		) {
+			continue;
+		}
+	
+		ship_draw_shadow(&g.ships[i], pd);
+	}
+	
+	render_set_depth_offset(0.0);
+	render_set_depth_write(true);
+	
+	
 	// Ship models
 	for (int i = 0; i < len(g.ships); i++) {
 		if (
@@ -156,26 +178,7 @@ void ships_draw(PlaydateAPI *pd) {
 	}
 
 
-	// Shadows
-	render_set_model_mat(&mat4_identity());
-
-	render_set_depth_write(false);
-	render_set_depth_offset(-32.0);
-
-	for (int i = 0; i < len(g.ships); i++) {
-		if (
-			(g.race_type == RACE_TYPE_TIME_TRIAL && i != g.pilot) ||
-			flags_not(g.ships[i].flags, SHIP_VISIBLE) || 
-			flags_is(g.ships[i].flags, SHIP_FLYING)
-		) {
-			continue;
-		}
-
-		ship_draw_shadow(&g.ships[i], pd);
-	}
-
-	render_set_depth_offset(0.0);
-	render_set_depth_write(true);
+	
 }
 
 
@@ -422,7 +425,7 @@ void ship_draw_shadow(ship_t *self, PlaydateAPI *pd) {
 			{wngr.x, wngr.y, wngr.z},
 			{nose.x, nose.y, nose.z},
 		}
-	}, pd);
+	}, true, pd);
 }
 
 void ship_update(ship_t *self) {

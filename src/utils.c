@@ -18,9 +18,7 @@ bool file_exists(const char *path, PlaydateAPI *pd) {
 }
 
 uint8_t *file_load(const char *path, uint32_t *bytes_read, PlaydateAPI *pd) {
-	pd->system->logToConsole("file_load %s", path);
 	SDFile *f = pd->file->open(path, kFileRead);
-	// error_if(!f, "Could not open file for reading: %s", path);
 
 	pd->file->seek(f, 0, SEEK_END);
 	int32_t size = pd->file->tell(f);
@@ -42,7 +40,6 @@ uint8_t *file_load(const char *path, uint32_t *bytes_read, PlaydateAPI *pd) {
 	pd->file->close(f);
 	
 	pd->system->logToConsole("file_load %s read %lu bytes success", path, size);
-	// error_if(*bytes_read != size, "Could not read file: %s", path);
 	return bytes;
 }
 
