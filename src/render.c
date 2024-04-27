@@ -108,6 +108,30 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
 }
 
+void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
+	float w2 = screen_size.x * 0.5;
+	float h2 = screen_size.y * 0.5;
+
+	vec3_t p0 = vec3_transform(tris_pair.vertices[0], &mvp_mat);
+	vec3_t p1 = vec3_transform(tris_pair.vertices[1], &mvp_mat);
+	vec3_t p2 = vec3_transform(tris_pair.vertices[2], &mvp_mat);
+	vec3_t p3 = vec3_transform(tris_pair.vertices[3], &mvp_mat);
+	if (p0.z >= 1.0 || p1.z >= 1.0 || p2.z >= 1.0 || p3.z >= 1.0) {
+		return;
+	}
+
+	vec2i_t sc0 = vec2i(p0.x * w2 + w2, h2 - p0.y * h2);
+	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
+	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
+	vec2i_t sc3 = vec2i(p3.x * w2 + w2, h2 - p3.y * h2);
+
+	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
+	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
+	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
+	pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, 1, kColorBlack);
+	pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, 1, kColorBlack);
+}
+
 void render_push_sprite(vec3_t pos, vec2i_t size, rgba_t color, uint16_t texture_index) {
 // 	vec3_t p0 = vec3_add(pos, vec3_transform(vec3(-size.x * 0.5, -size.y * 0.5, 0), &sprite_mat));
 // 	vec3_t p1 = vec3_add(pos, vec3_transform(vec3( size.x * 0.5, -size.y * 0.5, 0), &sprite_mat));

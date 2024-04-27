@@ -44,6 +44,10 @@ typedef struct {
 	vec3_t vertices[3];
 } tris_t;
 
+typedef struct {
+	vec3_t vertices[4];
+} tris_pair_t;
+
 #define rgb(R, G, B) ((rgb_t){.r = R, .g = G, .b = B})
 #define rgba(R, G, B, A) ((rgba_t){.r = R, .g = G, .b = B, .a = A})
 #define vec2(X, Y) ((vec2_t){.x = X, .y = Y})

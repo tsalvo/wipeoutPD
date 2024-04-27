@@ -9,7 +9,6 @@
 #include "camera.h"
 #include "object.h"
 #include "game.h"
-// #include <stdint.h>
 
 void track_load(const char *base_path, PlaydateAPI *pd) {
 	// Load and assemble high res track tiles
