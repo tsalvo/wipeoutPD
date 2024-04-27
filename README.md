@@ -1,17 +1,19 @@
 # wipeoutPD
 
-A Playdate Port of [wipeout-rewrite](https://github.com/phoboslab/wipeout-rewrite) by [phoboslab](https://github.com/phoboslab):
+A Playdate port of [wipeout-rewrite](https://github.com/phoboslab/wipeout-rewrite) by [phoboslab](https://github.com/phoboslab)
+
 So far, it is hard-coded to show the attract mode for one ship on a time trial. All graphics are drawn in a simple wireframe mode.
+
 ⚠️ Work in progress. Expect bugs.
 
 
 # Screenshots
-![Scenery Off](/screenshots/wipeoutPD-screen1.png?raw=true) ![Scenery On](/screenshots/wipeoutPD-screen2.png?raw=true) 
+![Scenery Off](/Screenshots/wipeoutPD-screen1.png?raw=true) ![Scenery On](/Screenshots/wipeoutPD-screen2.png?raw=true) 
 
 
 # Assets
 
-This repository does not contain the assets (textures, 3d models etc.) needed to run the game. See [wipeout-rewrite README.md](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md) for more details.
+This repository does not contain the assets (textures, 3D models etc.) needed to run the game. See [wipeout-rewrite README.md](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md) for more details.
 
 Assets should be placed in the `/Source` directory, for example:
 
