@@ -13,7 +13,7 @@ So far, it is hard-coded to show the attract mode for one ship on a time trial. 
 
 # Assets
 
-This repository does not contain the assets (textures, 3D models etc.) needed to run the game. See [wipeout-rewrite README.md](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md) for more details.
+This repository does not contain the assets (textures, 3D models etc.) needed to run the game. See [wipeout-rewrite README.md](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md#running) for more details.
 
 Assets should be placed in the `/Source` directory, for example:
 
@@ -40,10 +40,10 @@ Use the integrated Playdate Simulator Tasks for building and running
 ## Linux / Mac OS
 Use the `make` command to create a wipeout.pdx bundle. See section on *Assets* above
 
-# License - same as [wipeout-rewrite](https://github.com/phoboslab/wipeout-rewrite)
+# License - same as [wipeout-rewrite](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md#license)
 
 There is none.
 
 This code can NOT be used to make a commercial release of Wipeout for Playdate. It is intended only for building and running  on your own simulator or device.
-See [wipeout-rewrite README.md](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md) for details
+See [wipeout-rewrite README.md](https://github.com/phoboslab/wipeout-rewrite/blob/master/README.md#license) for details
 

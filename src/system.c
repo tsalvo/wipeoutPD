@@ -24,14 +24,6 @@ void system_update(PlaydateAPI* pd, float target_fps, bool draw_scenery) {
 	time_real = time_real_now;
 	tick_last = min(real_delta, 0.1) * time_scale;
 	time_scaled += tick_last;
-	
-	
-	
-	
-	// double real_delta = 1.0 / target_fps;
-	// time_real += real_delta;
-	// tick_last = min(real_delta, 0.1) * time_scale;
-	// time_scaled += tick_last;
 
 	// FIXME: come up with a better way to wrap the cycle_time, so that it
 	// doesn't lose precision, but also doesn't jump upon reset.
