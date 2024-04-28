@@ -8,7 +8,8 @@ So far, it is hard-coded to show the attract mode for one ship on a time trial. 
 
 
 # Screenshots
-![Scenery Off](/Screenshots/wipeoutPD-screen1.png?raw=true) ![Scenery On](/Screenshots/wipeoutPD-screen2.png?raw=true) 
+
+![Time Trial](/Screenshots/wipeoutPD-timetrial.gif?raw=true) ![Scenery Off](/Screenshots/wipeoutPD-screen1.png?raw=true)
 
 
 # Assets
@@ -29,6 +30,7 @@ Assets should be placed in the `/Source` directory, for example:
 
 ## Creating an Audio Track
 Example: from `input.mp3`
+
 `ffmpeg -i input.mp3 -acodec adpcm_ima_wav Track01.wav`
 
 
