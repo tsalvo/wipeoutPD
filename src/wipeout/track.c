@@ -241,8 +241,8 @@ void track_draw_section(section_t *section, PlaydateAPI *pd) {
 	int16_t face_count = section->face_count;
 	
 	for (uint16_t j = 0; j < face_count; j++) {
-		render_push_tris(face->tris[0], false, pd);
-		render_push_tris(face->tris[1], true, pd);
+		render_push_tris(face->tris[0], pd);
+		render_push_tris(face->tris[1], pd);
 		face++;
 	}
 }

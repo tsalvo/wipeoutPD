@@ -436,7 +436,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, i & 0x0001 == 1, pd);
+			}, pd);
 
 			poly.gt3 += 1;
 			break;
@@ -469,7 +469,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, i & 0x0001 == 1, pd);
+			}, pd);
 
 			poly.ft3 += 1;
 			break;
@@ -502,7 +502,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, i & 0x0001 == 1, pd);
+			}, pd);
 
 			poly.g3 += 1;
 			break;
@@ -535,7 +535,7 @@ void object_draw(Object *object, mat4_t *mat, PlaydateAPI *pd) {
 					vertex[coord1],
 					vertex[coord0]
 				}
-			}, i & 0x0001 == 1, pd);
+			}, pd);
 
 			poly.f3 += 1;
 			break;

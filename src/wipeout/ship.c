@@ -425,7 +425,7 @@ void ship_draw_shadow(ship_t *self, PlaydateAPI *pd) {
 			{wngr.x, wngr.y, wngr.z},
 			{nose.x, nose.y, nose.z},
 		}
-	}, true, pd);
+	}, pd);
 }
 
 void ship_update(ship_t *self) {

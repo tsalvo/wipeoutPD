@@ -17,6 +17,50 @@ static mat4_t mvp_mat = mat4_identity();
 static mat4_t projection_mat = mat4_identity();
 static mat4_t sprite_mat = mat4_identity();
 
+static LCDPattern grey25 = {
+	// Bitmap
+	0b10001000,
+	0b00100010,
+	0b10001000,
+	0b00100010,
+	0b10001000,
+	0b00100010,
+	0b10001000,
+	0b00100010,
+
+	// Mask
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+};
+
+static LCDPattern grey50 = {
+	// Bitmap
+	0b10101010,
+	0b01010101,
+	0b10101010,
+	0b01010101,
+	0b10101010,
+	0b01010101,
+	0b10101010,
+	0b01010101,
+
+	// Mask
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+	0b11111111,
+};
+
 void render_init(PlaydateAPI *pd, uint8_t scale) {
 	render_set_screen_size(pd, scale);
 }
@@ -40,7 +84,7 @@ void render_set_screen_size(PlaydateAPI *pd, uint8_t scale) {
 
 void render_frame_prepare(PlaydateAPI *pd) {
 	// TODO: why can't we use `pd->graphics->clear(kColorWhite)` - it fails to build - ?
-	pd->graphics->fillRect(0, 0, screen_size.x, screen_size.y, kColorWhite); // clear screen 
+	pd->graphics->fillRect(0, 0, screen_size.x, screen_size.y, kColorBlack); // clear screen 
 }
 
 
@@ -88,7 +132,7 @@ vec3_t render_transform(vec3_t pos) {
 	return vec3_transform(vec3_transform(pos, &view_mat), &projection_mat);
 }
 
-void render_push_tris(tris_t tris, bool color, PlaydateAPI *pd) {
+void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	
 	float w2 = screen_size.x * 0.5;
 	float h2 = screen_size.y * 0.5;
@@ -104,19 +148,24 @@ void render_push_tris(tris_t tris, bool color, PlaydateAPI *pd) {
 	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
 	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
 	
-	// alternating fill
-	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, color ? kColorBlack : kColorWhite);
-	
-	// hybrid (slow)
-	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, kColorWhite);
-	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
-	// pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
-	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
+	float avg_z = (p0.z + p1.z + p2.z) * 0.33333;
 	
 	// wireframe
-	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
+	LCDColor draw_color;
+	int lineWidth = 1;;
+	if (avg_z < 0.987) {
+		draw_color = kColorWhite;
+		lineWidth = 2;
+	} else if (avg_z < 0.9955) {
+		draw_color = kColorWhite;
+	} else if (avg_z < 0.9989) {
+		draw_color = (LCDColor)grey50;
+	} else {
+		draw_color = (LCDColor)grey25;
+	}
+	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, lineWidth, draw_color);
+	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, lineWidth, draw_color);
+	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, lineWidth, draw_color);
 }
 
 void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
@@ -136,25 +185,29 @@ void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
 	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
 	vec2i_t sc3 = vec2i(p3.x * w2 + w2, h2 - p3.y * h2);
 	
-	// alternating fill
-	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, kColorBlack);
-	// pd->graphics->fillTriangle(sc1.x, sc1.y, sc2.x, sc2.y, sc3.x, sc3.y, kColorWhite);
-
-	// hybrid (slow)
-	// pd->graphics->fillTriangle(sc0.x, sc0.y, sc1.x, sc1.y, sc2.x, sc2.y, kColorWhite);
-	// pd->graphics->fillTriangle(sc1.x, sc1.y, sc2.x, sc2.y, sc3.x, sc3.y, kColorWhite);
-	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
-	// pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
-	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
-	// pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, 1, kColorBlack);
-	// pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, 1, kColorBlack);
+	float avg_z = (p0.z + p1.z + p2.z + p3.z) * 0.25;
 	
 	// wireframe
-	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, 1, kColorBlack);
-	pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, 1, kColorBlack);
+	LCDColor draw_color;
+	int lineWidth;
+	if (avg_z < 0.987) {
+		draw_color = kColorWhite;
+		lineWidth = 2;
+	} else if (avg_z < 0.9955) {
+		draw_color = kColorWhite;
+		lineWidth = 1;
+	} else if (avg_z < 0.9989) {
+		draw_color = (LCDColor)grey50;
+		lineWidth = 1;
+	} else {
+		draw_color = (LCDColor)grey25;
+		lineWidth = 1;
+	}
+	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, lineWidth, draw_color);
+	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, lineWidth, draw_color);
+	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, lineWidth, draw_color);
+	pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, lineWidth, draw_color);
+	pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, lineWidth, draw_color);
 }
 
 void render_push_sprite(vec3_t pos, vec2i_t size, rgba_t color, uint16_t texture_index) {
