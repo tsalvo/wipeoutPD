@@ -46,12 +46,6 @@
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
-#define error_if(TEST, ...) \
-	if (TEST) { \
-		// printf("error\n"); \
-	}
-
-
 #define flags_add(FLAGS, F)  (FLAGS |= (F))
 #define flags_rm(FLAGS, F)   (FLAGS &= ~(F))
 #define flags_is(FLAGS, F)   ((FLAGS & (F)) == (F))

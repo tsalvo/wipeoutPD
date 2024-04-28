@@ -497,7 +497,7 @@ void ship_ai_update_race(ship_t *self) {
 		track_target.x = (track_target.x * self->speed) / gap_length;
 		track_target.z = (track_target.z * self->speed) / gap_length;
 
-		track_target.y = 500;
+		track_target.y = 500.0F;
 
 		vec3_t best_path = vec3_project_to_ray(self->position, next->center, self->section->center);
 		self->acceleration = vec3(
@@ -507,7 +507,7 @@ void ship_ai_update_race(ship_t *self) {
 		);
 		self->velocity = vec3_add(self->velocity, vec3_mulf(self->acceleration, 30 * system_tick()));
 
-		self->angular_velocity.x = -0.3 - self->angle.x * 30;
+		self->angular_velocity.x = -0.3F - self->angle.x * 30.0F;
 		self->angular_velocity.y = wrap_angle(-atan2(track_target.x, track_target.z) - self->angle.y) * (1.0/16.0) * 30;
 	}
 
@@ -525,16 +525,16 @@ void ship_ai_update_race(ship_t *self) {
 	if (flags_is(self->flags, SHIP_ELECTROED)) {
 		self->ebolt_effect_timer += system_tick();
 
-		if (self->ebolt_effect_timer > 0.1) {
-			self->ebolt_effect_timer -= 0.1;
+		if (self->ebolt_effect_timer > 0.1F) {
+			self->ebolt_effect_timer -= 0.1F;
 
-			self->position = vec3_add(self->position, vec3(rand_float(-20, 20), rand_float(-20, 20), rand_float(-20, 20)));
+			self->position = vec3_add(self->position, vec3(rand_float(-20.0F, 20.0F), rand_float(-20.0F, 20.0F), rand_float(-20.0F, 20.0F)));
 
 			if (rand_int(0, 10) == 0) {
-				self->speed -= self->speed * 0.5;
+				self->speed -= self->speed * 0.5F;
 			}
 		}
 	}
 
-	sfx_set_position(self->sfx_engine_thrust, self->position, self->velocity, 0.5);
+	sfx_set_position(self->sfx_engine_thrust, self->position, self->velocity, 0.5F);
 }

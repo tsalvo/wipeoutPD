@@ -45,10 +45,9 @@ uint8_t *file_load(const char *path, uint32_t *bytes_read, PlaydateAPI *pd) {
 
 uint32_t file_store(const char *path, void *bytes, int32_t len, PlaydateAPI *pd) {
 	SDFile *f = pd->file->open(path, kFileWrite);
-	// error_if(!f, "Could not open file for writing: %s", path);
 
 	if (pd->file->write(f, bytes, len) != len) {
-		// printf("Could not write file file %s", path);
+		pd->system->logToConsole("Could not write file file %s", path);
 	}
 	
 	pd->file->close(f);

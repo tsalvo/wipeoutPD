@@ -187,7 +187,6 @@ void track_load_sections(char *file_name, PlaydateAPI *pd) {
 		ts->center.z = get_i32(bytes, &p);
 
 		int16_t version = get_i16(bytes, &p);
-		// error_if(version != TRACK_VERSION, "Convert track with track10: section: %d Track: %d\n", version, TRACK_VERSION);
 		p += 2; // padding
 
 		p += 4 + 4; // objects pointer, objectCount

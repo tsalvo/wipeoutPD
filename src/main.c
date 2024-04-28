@@ -14,11 +14,9 @@
 
 #define TARGET_FPS 30.0
 
-static uint8_t scale = 1;
 static bool draw_scenery = true;
 
 static int update(void* userdata);
-static void scaleOptionsCallback(void* userdata);
 static void sceneryCheckboxCallback(void* userdata);
 static void playTrack01(PlaydateAPI* pd);
 PDMenuItem *optionMenuItem = NULL;
@@ -34,11 +32,9 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 	{
 		pd = playdate;
 		playdate->system->removeAllMenuItems();
-		const char *scaleOptions[] = {"1", "2", "4"};
-		optionMenuItem = pd->system->addOptionsMenuItem("Scale", scaleOptions, 3, scaleOptionsCallback, NULL);
 		drawSceneryMenuItem = pd->system->addCheckmarkMenuItem("Scenery", 1, sceneryCheckboxCallback, NULL);
 		playTrack01(playdate);
-		system_init(playdate, scale, TARGET_FPS);
+		system_init(playdate, TARGET_FPS);
 		playdate->system->setUpdateCallback(update, playdate);
 	}
 	
@@ -63,15 +59,6 @@ static void playTrack01(PlaydateAPI* playdate) {
 		playdate->sound->fileplayer->play(fp, 0);
 	} else {
 		playdate->sound->fileplayer->freePlayer(fp);
-	}
-}
-
-static void scaleOptionsCallback(void* userdata) {
-	uint8_t options[] = {1, 2, 4};
-	uint8_t newValue = options[pd->system->getMenuItemValue(optionMenuItem)];
-	if (newValue != scale) {
-		scale = newValue;
-		system_resize(pd, newValue);
 	}
 }
 

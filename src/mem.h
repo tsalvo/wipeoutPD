@@ -12,6 +12,5 @@ void mem_reset(void *p);
 
 void *mem_temp_alloc(uint32_t size);
 void mem_temp_free(void *p);
-void mem_temp_check(void);
 
 #endif

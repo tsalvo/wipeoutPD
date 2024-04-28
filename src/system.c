@@ -12,9 +12,9 @@ static double time_scale = 1.0;
 static double tick_last;
 static double cycle_time = 0;
 
-void system_init(PlaydateAPI* pd, uint8_t scale, float target_fps) {
+void system_init(PlaydateAPI* pd, float target_fps) {
 	pd->display->setRefreshRate(target_fps);
-	render_init(pd, scale);
+	render_init(pd);
 	game_init(pd);
 }
 
@@ -38,10 +38,6 @@ void system_update(PlaydateAPI* pd, float target_fps, bool draw_scenery) {
 
 void system_reset_cycle_time(void) {
 	cycle_time = 0;
-}
-
-void system_resize(PlaydateAPI* pd, uint8_t scale) {
-	render_set_screen_size(pd, scale);
 }
 
 double system_time_scale_get(void) {

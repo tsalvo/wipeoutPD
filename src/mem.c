@@ -23,21 +23,17 @@ void *mem_mark(void) {
 }
 
 void *mem_bump(uint32_t size) {
-	// error_if(bump_len + temp_len + size >= MEM_HUNK_BYTES, "Failed to allocate %d bytes in hunk mem", size);
 	uint8_t *p = &hunk[bump_len];
 	bump_len += size;
 	memset(p, 0, size);
 	peak_usage = max(peak_usage, bump_len + temp_len);
-	// // printf("  mem_bump %lu bytes, using %lu of %lu bytes (peak = %lu)\n", size, bump_len + temp_len, MEM_HUNK_BYTES, peak_usage);
 	return p;
 }
 
 void mem_reset(void *p) {
 	uint32_t offset = (uint8_t *)p - (uint8_t *)hunk;
-	// error_if(offset > bump_len || offset > MEM_HUNK_BYTES, "Invalid mem reset");
 	bump_len = offset;
 	peak_usage = max(peak_usage, bump_len + temp_len);
-	// // printf("  mem_reset,          using %lu of %lu bytes (peak = %lu)\n", bump_len + temp_len, MEM_HUNK_BYTES, peak_usage);
 }
 
 
@@ -51,10 +47,6 @@ void mem_reset(void *p) {
 
 void *mem_temp_alloc(uint32_t size) {
 	size = ((size + 7) >> 3) << 3; // allign to 8 bytes
-
-	// error_if(bump_len + temp_len + size >= MEM_HUNK_BYTES, "Failed to allocate %d bytes in temp mem", size);
-	// error_if(temp_objects_len >= MEM_TEMP_OBJECTS_MAX, "MEM_TEMP_OBJECTS_MAX reached");
-
 	temp_len += size;
 	void *p = &hunk[MEM_HUNK_BYTES - temp_len];
 	temp_objects[temp_objects_len++] = temp_len;
@@ -65,7 +57,6 @@ void *mem_temp_alloc(uint32_t size) {
 
 void mem_temp_free(void *p) {
 	uint32_t offset = (uint8_t *)&hunk[MEM_HUNK_BYTES] - (uint8_t *)p;
-	// error_if(offset > MEM_HUNK_BYTES, "Object 0x%p not in temp hunk", p);
 
 	bool found = false;
 	uint32_t remaining_max = 0;
@@ -78,12 +69,7 @@ void mem_temp_free(void *p) {
 			remaining_max = temp_objects[i];
 		}
 	}
-	// error_if(!found, "Object 0x%p not in temp hunk", p);
 	temp_len = remaining_max;
 	peak_usage = max(peak_usage, bump_len + temp_len);
-	// // printf("  mem_temp_free,      using %lu of %lu bytes (peak = %lu)\n", bump_len + temp_len, MEM_HUNK_BYTES, peak_usage);
 }
 
-void mem_temp_check(void) {
-	// error_if(temp_len != 0, "Temp memory not free: %d object(s)", temp_objects_len);
-}

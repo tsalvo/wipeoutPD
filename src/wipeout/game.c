@@ -55,8 +55,8 @@ const game_def_t def = {
 			.logo_model = 2,
 			.pilots = {0, 1},
 			.attributes = {
-				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  790, .resistance = 140, .turn_rate = TURN_ACCEL(160), .turn_rate_max = TURN_VEL(2560), .skid = 12},
-				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1200, .resistance = 140, .turn_rate = TURN_ACCEL(160), .turn_rate_max = TURN_VEL(2560), .skid = 10},
+				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  790, .resistance = 140, .turn_rate = TURN_ACCEL(160.0F), .turn_rate_max = TURN_VEL(2560), .skid = 12},
+				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1200, .resistance = 140, .turn_rate = TURN_ACCEL(160.0F), .turn_rate_max = TURN_VEL(2560), .skid = 10},
 			},
 		},
 		[TEAM_AURICOM] = {
@@ -64,8 +64,8 @@ const game_def_t def = {
 			.logo_model = 3,
 			.pilots = {2, 3},
 			.attributes = {
-				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  850, .resistance = 134, .turn_rate = TURN_ACCEL(140), .turn_rate_max = TURN_VEL(1920), .skid = 20},
-				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1400, .resistance = 140, .turn_rate = TURN_ACCEL(120), .turn_rate_max = TURN_VEL(1920), .skid = 14},
+				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  850, .resistance = 134, .turn_rate = TURN_ACCEL(140.0F), .turn_rate_max = TURN_VEL(1920.0F), .skid = 20},
+				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1400, .resistance = 140, .turn_rate = TURN_ACCEL(120.0F), .turn_rate_max = TURN_VEL(1920.0F), .skid = 14},
 			},
 		},
 		[TEAM_QIREX] = {
@@ -73,8 +73,8 @@ const game_def_t def = {
 			.logo_model = 1,
 			.pilots = {4, 5},
 			.attributes = {
-				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  850, .resistance = 140, .turn_rate = TURN_ACCEL(120), .turn_rate_max = TURN_VEL(1920), .skid = 24},
-				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1400, .resistance = 130, .turn_rate = TURN_ACCEL(140), .turn_rate_max = TURN_VEL(1920), .skid = 16},
+				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  850, .resistance = 140, .turn_rate = TURN_ACCEL(120.0F), .turn_rate_max = TURN_VEL(1920.0F), .skid = 24},
+				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1400, .resistance = 130, .turn_rate = TURN_ACCEL(140.0F), .turn_rate_max = TURN_VEL(1920.0F), .skid = 16},
 			},
 		},
 		[TEAM_FEISAR] = {
@@ -82,8 +82,8 @@ const game_def_t def = {
 			.logo_model = 0,
 			.pilots = {6, 7},
 			.attributes = {
-				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  790, .resistance = 134, .turn_rate = TURN_ACCEL(180), .turn_rate_max = TURN_VEL(2560), .skid = 12},
-				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1200, .resistance = 130, .turn_rate = TURN_ACCEL(180), .turn_rate_max = TURN_VEL(2560), .skid =  8},
+				[RACE_CLASS_VENOM]  = {.mass = 150, .thrust_max =  790, .resistance = 134, .turn_rate = TURN_ACCEL(180.0F), .turn_rate_max = TURN_VEL(2560.0F), .skid = 12},
+				[RACE_CLASS_RAPIER] = {.mass = 150, .thrust_max = 1200, .resistance = 130, .turn_rate = TURN_ACCEL(180.0F), .turn_rate_max = TURN_VEL(2560.0F), .skid =  8},
 			},
 		},
 	},

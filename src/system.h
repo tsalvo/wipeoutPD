@@ -4,9 +4,8 @@
 #include "types.h"
 #include "pd_api.h"
 
-void system_init(PlaydateAPI *pd, uint8_t scale, float target_fps);
+void system_init(PlaydateAPI *pd, float target_fps);
 void system_update(PlaydateAPI *pd, float target_fps, bool draw_scenery);
-void system_resize(PlaydateAPI* pd, uint8_t scale);
 
 double system_time(void);
 double system_tick(void);

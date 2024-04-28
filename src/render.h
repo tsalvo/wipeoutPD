@@ -4,10 +4,10 @@
 #include "types.h"
 #include "pd_api.h"
 
-#define RENDER_FADEOUT_FAR 42000.0
+#define RENDER_FADEOUT_FAR 42000.0F
 
-void render_init(PlaydateAPI *pd, uint8_t scale);
-void render_set_screen_size(PlaydateAPI *pd, uint8_t scale);
+void render_init(PlaydateAPI *pd);
+void render_set_screen_size(PlaydateAPI *pd);
 
 void render_frame_prepare(PlaydateAPI *pd);
 

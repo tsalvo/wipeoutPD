@@ -39,8 +39,6 @@ void ships_load(PlaydateAPI *pd) {
 
 		ship_init_exhaust_plume(&g.ships[ship_index]);
 	}
-
-	// error_if(object_index != len(g.ships), "Expected %ld ship models, got %d", len(g.ships), object_index);
 }
 
 

@@ -4,13 +4,15 @@
 #include "utils.h"
 #include "platform.h"
 
-#define NEAR_PLANE 16.0
+#define NEAR_PLANE 16.0F
 #define FAR_PLANE (RENDER_FADEOUT_FAR)
 
 static rgba_t *screen_buffer;
 static int32_t screen_pitch;
 static int32_t screen_ppr;
 static vec2i_t screen_size;
+static float screen_w2;
+static float screen_h2;
 
 static mat4_t view_mat = mat4_identity();
 static mat4_t mvp_mat = mat4_identity();
@@ -61,19 +63,20 @@ static LCDPattern grey50 = {
 	0b11111111,
 };
 
-void render_init(PlaydateAPI *pd, uint8_t scale) {
-	render_set_screen_size(pd, scale);
+void render_init(PlaydateAPI *pd) {
+	render_set_screen_size(pd);
 }
 
-void render_set_screen_size(PlaydateAPI *pd, uint8_t scale) {
-	pd->display->setScale(scale);
+void render_set_screen_size(PlaydateAPI *pd) {
 	screen_size.x = pd->display->getWidth();
 	screen_size.y = pd->display->getHeight();
+	screen_w2 = screen_size.x * 0.5F;
+	screen_h2 = screen_size.y * 0.5F;
 
 	float aspect = (float)screen_size.x / (float)screen_size.y;
-	float fov = (73.75 / 180.0) * 3.14159265358;
-	float f = 1.0 / tan(fov / 2);
-	float nf = 1.0 / (NEAR_PLANE - FAR_PLANE);
+	float fov = (73.75F / 180.0F) * 3.14159265358F;
+	float f = 1.0F / tan(fov / 2.0F);
+	float nf = 1.0F / (NEAR_PLANE - FAR_PLANE);
 	projection_mat = mat4(
 		f / aspect, 0, 0, 0,
 		0, f, 0, 0, 
@@ -133,32 +136,29 @@ vec3_t render_transform(vec3_t pos) {
 }
 
 void render_push_tris(tris_t tris, PlaydateAPI *pd) {
-	
-	float w2 = screen_size.x * 0.5;
-	float h2 = screen_size.y * 0.5;
 
 	vec3_t p0 = vec3_transform(tris.vertices[0], &mvp_mat);
 	vec3_t p1 = vec3_transform(tris.vertices[1], &mvp_mat);
 	vec3_t p2 = vec3_transform(tris.vertices[2], &mvp_mat);
-	if (p0.z >= 1.0 || p1.z >= 1.0 || p2.z >= 1.0) {
+	if (p0.z >= 1.0F || p1.z >= 1.0F || p2.z >= 1.0F) {
 		return;
 	}
 
-	vec2i_t sc0 = vec2i(p0.x * w2 + w2, h2 - p0.y * h2);
-	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
-	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
+	vec2i_t sc0 = vec2i(p0.x * screen_w2 + screen_w2, screen_h2 - p0.y * screen_h2);
+	vec2i_t sc1 = vec2i(p1.x * screen_w2 + screen_w2, screen_h2 - p1.y * screen_h2);
+	vec2i_t sc2 = vec2i(p2.x * screen_w2 + screen_w2, screen_h2 - p2.y * screen_h2);
 	
-	float avg_z = (p0.z + p1.z + p2.z) * 0.33333;
+	float avg_z = (p0.z + p1.z + p2.z) * 0.33333F;
 	
 	// wireframe
 	LCDColor draw_color;
 	int lineWidth = 1;;
-	if (avg_z < 0.987) {
+	if (avg_z < 0.987F) {
 		draw_color = kColorWhite;
 		lineWidth = 2;
-	} else if (avg_z < 0.9955) {
+	} else if (avg_z < 0.9955F) {
 		draw_color = kColorWhite;
-	} else if (avg_z < 0.9989) {
+	} else if (avg_z < 0.9989F) {
 		draw_color = (LCDColor)grey50;
 	} else {
 		draw_color = (LCDColor)grey25;
@@ -169,34 +169,32 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 }
 
 void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
-	float w2 = screen_size.x * 0.5;
-	float h2 = screen_size.y * 0.5;
 
 	vec3_t p0 = vec3_transform(tris_pair.vertices[0], &mvp_mat);
 	vec3_t p1 = vec3_transform(tris_pair.vertices[1], &mvp_mat);
 	vec3_t p2 = vec3_transform(tris_pair.vertices[2], &mvp_mat);
 	vec3_t p3 = vec3_transform(tris_pair.vertices[3], &mvp_mat);
-	if (p0.z >= 1.0 || p1.z >= 1.0 || p2.z >= 1.0 || p3.z >= 1.0) {
+	if (p0.z >= 1.0F || p1.z >= 1.0F || p2.z >= 1.0F || p3.z >= 1.0F) {
 		return;
 	}
 
-	vec2i_t sc0 = vec2i(p0.x * w2 + w2, h2 - p0.y * h2);
-	vec2i_t sc1 = vec2i(p1.x * w2 + w2, h2 - p1.y * h2);
-	vec2i_t sc2 = vec2i(p2.x * w2 + w2, h2 - p2.y * h2);
-	vec2i_t sc3 = vec2i(p3.x * w2 + w2, h2 - p3.y * h2);
+	vec2i_t sc0 = vec2i(p0.x * screen_w2 + screen_w2, screen_h2 - p0.y * screen_h2);
+	vec2i_t sc1 = vec2i(p1.x * screen_w2 + screen_w2, screen_h2 - p1.y * screen_h2);
+	vec2i_t sc2 = vec2i(p2.x * screen_w2 + screen_w2, screen_h2 - p2.y * screen_h2);
+	vec2i_t sc3 = vec2i(p3.x * screen_w2 + screen_w2, screen_h2 - p3.y * screen_h2);
 	
-	float avg_z = (p0.z + p1.z + p2.z + p3.z) * 0.25;
+	float avg_z = (p0.z + p1.z + p2.z + p3.z) * 0.25F;
 	
 	// wireframe
 	LCDColor draw_color;
 	int lineWidth;
-	if (avg_z < 0.987) {
+	if (avg_z < 0.987F) {
 		draw_color = kColorWhite;
 		lineWidth = 2;
-	} else if (avg_z < 0.9955) {
+	} else if (avg_z < 0.9955F) {
 		draw_color = kColorWhite;
 		lineWidth = 1;
-	} else if (avg_z < 0.9989) {
+	} else if (avg_z < 0.9989F) {
 		draw_color = (LCDColor)grey50;
 		lineWidth = 1;
 	} else {

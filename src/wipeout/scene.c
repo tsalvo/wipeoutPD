@@ -69,15 +69,12 @@ void scene_load(const char *base_path, float sky_y_offset, PlaydateAPI* pd) {
 		mat4_set_translation(&obj->mat, obj->origin);
 
 		if (str_starts_with(obj->name, "start")) {
-			// error_if(start_booms_len >= SCENE_START_BOOMS_MAX, "SCENE_START_BOOMS_MAX reached");
 			start_booms[start_booms_len++] = obj;
 		}
 		else if (str_starts_with(obj->name, "redl")) {
-			// error_if(red_lights_len >= SCENE_RED_LIGHTS_MAX, "SCENE_RED_LIGHTS_MAX reached");
 			red_lights[red_lights_len++] = obj;
 		}
 		else if (str_starts_with(obj->name, "donkey")) {
-			// error_if(oil_pumps_len >= SCENE_OIL_PUMPS_MAX, "SCENE_OIL_PUMPS_MAX reached");
 			oil_pumps[oil_pumps_len++] = obj;
 		}
 		else if (
@@ -85,7 +82,6 @@ void scene_load(const char *base_path, float sky_y_offset, PlaydateAPI* pd) {
 			str_starts_with(obj->name, "stad_") ||
 			str_starts_with(obj->name, "newstad_")
 		) {
-			// error_if(stands_len >= SCENE_STANDS_MAX, "SCENE_STANDS_MAX reached");
 			stands[stands_len++] = (scene_stand_t){.sfx = NULL, .pos = obj->origin};
 		}
 		obj = obj->next;

@@ -9,6 +9,7 @@
 #include "pd_api.h"
 
 #define texture_list_empty() ((texture_list_t){0, 0})
+#define M_PIF 3.141592653589793238462643383279502884e+00F
 
 typedef struct {
 	uint16_t start;
@@ -162,11 +163,11 @@ static inline vec3_t vec3_normalize(vec3_t a) {
 }
 
 static inline float wrap_angle(float a) {
-	a = fmod(a + M_PI, M_PI * 2);
+	a = fmod(a + M_PIF, M_PIF * 2);
 	if (a < 0) {
-		a += M_PI * 2;
+		a += M_PIF * 2;
 	}
-	return a - M_PI;
+	return a - M_PIF;
 }
 
 rgba_t rgba_from_u32(uint32_t v);
