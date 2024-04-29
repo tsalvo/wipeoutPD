@@ -45,7 +45,7 @@ void race_init(PlaydateAPI* pd) {
 		for (int i = 0; i < len(g.ships); i++) {
 			// FIXME: this is needed to initializes the engine sound. Should 
 			// maybe be done in a separate step?
-			ship_ai_update_intro(&g.ships[i]); 
+			ship_ai_update_intro(&g.ships[i], pd); 
 
 			g.ships[i].update_func = ship_ai_update_race;
 			flags_rm(g.ships[i].flags, SHIP_VIEW_INTERNAL);
@@ -73,7 +73,7 @@ void race_update(PlaydateAPI *pd, bool draw_scenery) {
 	// 	}
 	// }
 	// else {
-		ships_update();
+		ships_update(pd);
 		// droid_update(&g.droid, &g.ships[g.pilot]);
 		camera_update(&g.camera, &g.ships[g.pilot], &g.droid);
 		// weapons_update();

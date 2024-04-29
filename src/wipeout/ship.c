@@ -110,13 +110,13 @@ static inline bool sort_rank_compare(pilot_points_t *pa, pilot_points_t *pb) {
 	}
 }
 
-void ships_update(void) {
+void ships_update(PlaydateAPI *pd) {
 	if (g.race_type == RACE_TYPE_TIME_TRIAL) {
-		ship_update(&g.ships[g.pilot]);
+		ship_update(&g.ships[g.pilot], pd);
 	}
 	else {
 		for (int i = 0; i < len(g.ships); i++) {
-			ship_update(&g.ships[i]);
+			ship_update(&g.ships[i], pd);
 		}
 		for (int j = 0; j < (len(g.ships) - 1); j++) {
 			for (int i = j + 1; i < len(g.ships); i++) {
@@ -426,7 +426,7 @@ void ship_draw_shadow(ship_t *self, PlaydateAPI *pd) {
 	}, pd);
 }
 
-void ship_update(ship_t *self) {
+void ship_update(ship_t *self, PlaydateAPI *pd) {
 
 	// Set Unit vectors of this ship
 	float sx = sin(self->angle.x);
@@ -504,7 +504,7 @@ void ship_update(ship_t *self) {
 	self->last_impact_time += system_tick();
 	
 	// Call the active player/ai update function
-	(self->update_func)(self);
+	(self->update_func)(self, pd);
 
 
 	// Animate the exhaust plume

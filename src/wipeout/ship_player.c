@@ -19,13 +19,13 @@
 #include "game.h"
 #include "particle.h"
 
-#define INPUT_ACTION_MAX 32
-static float actions_state[INPUT_ACTION_MAX];
-static bool actions_pressed[INPUT_ACTION_MAX];
-float input_state(uint8_t action);
-bool input_pressed(uint8_t action);
+// #define INPUT_ACTION_MAX 32
+// static float actions_state[INPUT_ACTION_MAX];
+// static bool actions_pressed[INPUT_ACTION_MAX];
+float input_state(uint8_t action, PlaydateAPI *pd);
+bool input_pressed(uint8_t action, PlaydateAPI *pd);
 
-void ship_player_update_sfx(ship_t *self) {
+void ship_player_update_sfx(ship_t *self, PlaydateAPI *pd) {
 	float speedf = self->speed * 0.000015F;
 	self->sfx_engine_intake->volume = clamp(speedf, 0.0F, 0.5F);
 	self->sfx_engine_intake->pitch = 0.5F + speedf * 1.25F;
@@ -41,7 +41,7 @@ void ship_player_update_sfx(ship_t *self) {
 	self->sfx_shield->volume = flags_is(self->flags, SHIP_SHIELDED) ? 0.5F : 0.0F;
 }
 
-void ship_player_update_intro(ship_t *self) {
+void ship_player_update_intro(ship_t *self, PlaydateAPI *pd) {
 	self->temp_target = self->position;
 
 	self->sfx_engine_thrust = sfx_reserve_loop(SFX_ENGINE_THRUST);
@@ -49,12 +49,12 @@ void ship_player_update_intro(ship_t *self) {
 	self->sfx_shield = sfx_reserve_loop(SFX_SHIELD);
 	self->sfx_turbulence = sfx_reserve_loop(SFX_TURBULENCE);
 
-	ship_player_update_intro_general(self);
+	ship_player_update_intro_general(self, pd);
 	self->update_func = ship_player_update_intro_await_three;
 }
 
-void ship_player_update_intro_await_three(ship_t *self) {
-	ship_player_update_intro_general(self);
+void ship_player_update_intro_await_three(ship_t *self, PlaydateAPI *pd) {
+	ship_player_update_intro_general(self, pd);
 
 	if (self->update_timer <= UPDATE_TIME_THREE) {
 		sfx_t *sfx = sfx_play(SFX_VOICE_COUNT_3);
@@ -62,8 +62,8 @@ void ship_player_update_intro_await_three(ship_t *self) {
 	}
 }
 
-void ship_player_update_intro_await_two(ship_t *self) {
-	ship_player_update_intro_general(self);	
+void ship_player_update_intro_await_two(ship_t *self, PlaydateAPI *pd) {
+	ship_player_update_intro_general(self, pd);	
 
 	if (self->update_timer <= UPDATE_TIME_TWO) {
 		scene_set_start_booms(1);
@@ -72,8 +72,8 @@ void ship_player_update_intro_await_two(ship_t *self) {
 	}
 }
 
-void ship_player_update_intro_await_one(ship_t *self) {
-	ship_player_update_intro_general(self);
+void ship_player_update_intro_await_one(ship_t *self, PlaydateAPI *pd) {
+	ship_player_update_intro_general(self, pd);
 
 	if (self->update_timer <= UPDATE_TIME_ONE) {
 		scene_set_start_booms(2);
@@ -82,8 +82,8 @@ void ship_player_update_intro_await_one(ship_t *self) {
 	}
 }
 
-void ship_player_update_intro_await_go(ship_t *self) {
-	ship_player_update_intro_general(self);
+void ship_player_update_intro_await_go(ship_t *self, PlaydateAPI *pd) {
+	ship_player_update_intro_general(self, pd);
 
 	if (self->update_timer <= UPDATE_TIME_GO) {
 		scene_set_start_booms(3);
@@ -111,13 +111,13 @@ void ship_player_update_intro_await_go(ship_t *self) {
 	}
 }
 
-void ship_player_update_intro_general(ship_t *self) {
+void ship_player_update_intro_general(ship_t *self, PlaydateAPI *pd) {
 	self->update_timer -= system_tick();
 	self->position.y = self->temp_target.y + sinf(self->update_timer * 80.0F * 30.0F * M_PIF * 2.0F / 4096.0F) * 32.0F;
 
 	// Thrust
-	if (input_state(A_THRUST)) {
-		self->thrust_mag += input_state(A_THRUST) * SHIP_THRUST_RATE * system_tick();
+	if (input_state(A_THRUST, pd)) {
+		self->thrust_mag += input_state(A_THRUST, pd) * SHIP_THRUST_RATE * system_tick();
 	}
 	else {
 		self->thrust_mag -= SHIP_THRUST_RATE * system_tick();
@@ -126,7 +126,7 @@ void ship_player_update_intro_general(ship_t *self) {
 	self->thrust_mag = clamp(self->thrust_mag, 0, self->thrust_max);
 
 	// View
-	if (input_pressed(A_CHANGE_VIEW)) {
+	if (input_pressed(A_CHANGE_VIEW, pd)) {
 		if (flags_not(self->flags, SHIP_VIEW_INTERNAL)) {
 			g.camera.update_func = camera_update_race_internal;
 			flags_add(self->flags, SHIP_VIEW_INTERNAL);
@@ -141,7 +141,7 @@ void ship_player_update_intro_general(ship_t *self) {
 }
 
 
-void ship_player_update_race(ship_t *self) {
+void ship_player_update_race(ship_t *self, PlaydateAPI *pd) {
 	if (flags_not(self->flags, SHIP_RACING)) {
 		self->update_func = ship_ai_update_race;
 		return;
@@ -177,20 +177,20 @@ void ship_player_update_race(ship_t *self) {
 
 	self->angular_acceleration = vec3(0, 0, 0);
 
-	if (input_state(A_LEFT)) {
+	if (input_state(A_LEFT, pd)) {
 		if (self->angular_velocity.y >= 0) {
-			self->angular_acceleration.y += input_state(A_LEFT) * self->turn_rate;
+			self->angular_acceleration.y += input_state(A_LEFT, pd) * self->turn_rate;
 		}
 		else if (self->angular_velocity.y < 0) {
-			self->angular_acceleration.y += input_state(A_LEFT) * self->turn_rate * 2;
+			self->angular_acceleration.y += input_state(A_LEFT, pd) * self->turn_rate * 2;
 		}
 	}
-	else if (input_state(A_RIGHT)) {
+	else if (input_state(A_RIGHT, pd)) {
 		if (self->angular_velocity.y <= 0) {
-			self->angular_acceleration.y -= input_state(A_RIGHT) * self->turn_rate;
+			self->angular_acceleration.y -= input_state(A_RIGHT, pd) * self->turn_rate;
 		}
 		else if (self->angular_velocity.y > 0) {
-			self->angular_acceleration.y -= input_state(A_RIGHT) * self->turn_rate * 2;
+			self->angular_acceleration.y -= input_state(A_RIGHT, pd) * self->turn_rate * 2;
 		}
 	}
 	
@@ -211,8 +211,8 @@ void ship_player_update_race(ship_t *self) {
 		}
 	}
 
-	self->angular_acceleration.x += input_state(A_DOWN) * SHIP_PITCH_ACCEL;
-	self->angular_acceleration.x -= input_state(A_UP) * SHIP_PITCH_ACCEL;
+	self->angular_acceleration.x += input_state(A_DOWN, pd) * SHIP_PITCH_ACCEL;
+	self->angular_acceleration.x -= input_state(A_UP, pd) * SHIP_PITCH_ACCEL;
 
 	// Handle Stall
 	if (self->update_timer > 0) {
@@ -227,8 +227,8 @@ void ship_player_update_race(ship_t *self) {
 	}
 
 	// Thrust
-	if (input_state(A_THRUST)) {
-		self->thrust_mag += input_state(A_THRUST) * SHIP_THRUST_RATE * system_tick();
+	if (input_state(A_THRUST, pd)) {
+		self->thrust_mag += input_state(A_THRUST, pd) * SHIP_THRUST_RATE * system_tick();
 	}
 	else {
 		self->thrust_mag -= SHIP_THRUST_FALLOFF * system_tick();
@@ -236,7 +236,7 @@ void ship_player_update_race(ship_t *self) {
 	self->thrust_mag = clamp(self->thrust_mag, 0, self->current_thrust_max);
 
 	// Brake
-	if (input_state(A_BRAKE_RIGHT))	{
+	if (input_state(A_BRAKE_RIGHT, pd))	{
 		self->brake_right += SHIP_BRAKE_RATE * system_tick();
 	}
 	else if (self->brake_right > 0) {
@@ -244,7 +244,7 @@ void ship_player_update_race(ship_t *self) {
 	}
 	self->brake_right = clamp(self->brake_right, 0, 256);
 
-	if (input_state(A_BRAKE_LEFT))	{
+	if (input_state(A_BRAKE_LEFT, pd))	{
 		self->brake_left += SHIP_BRAKE_RATE * system_tick();
 	}
 	else if (self->brake_left > 0) {
@@ -253,7 +253,7 @@ void ship_player_update_race(ship_t *self) {
 	self->brake_left = clamp(self->brake_left, 0, 256);
 
 	// View
-	if (input_pressed(A_CHANGE_VIEW)) {
+	if (input_pressed(A_CHANGE_VIEW, pd)) {
 		if (flags_not(self->flags, SHIP_VIEW_INTERNAL)) {
 			g.camera.update_func = camera_update_race_internal;
 			flags_add(self->flags, SHIP_VIEW_INTERNAL);
@@ -274,7 +274,7 @@ void ship_player_update_race(ship_t *self) {
 	// Fire
 	// self->weapon_type = WEAPON_TYPE_MISSILE; // Test weapon
 
-	if (input_pressed(A_FIRE) && self->weapon_type != WEAPON_TYPE_NONE) {
+	if (input_pressed(A_FIRE, pd) && self->weapon_type != WEAPON_TYPE_NONE) {
 		if (flags_not(self->flags, SHIP_SHIELDED)) {
 			weapons_fire(self, self->weapon_type);
 		}
@@ -466,7 +466,7 @@ void ship_player_update_race(ship_t *self) {
 }
 
 
-void ship_player_update_rescue(ship_t *self) {
+void ship_player_update_rescue(ship_t *self, PlaydateAPI *pd) {
 
 	section_t *next = self->section->next;
 
@@ -579,10 +579,59 @@ ship_t *ship_player_find_target(ship_t *self) {
 	}
 }
 
-float input_state(uint8_t action) {
-	return actions_state[action];
+float input_state(uint8_t action, PlaydateAPI* pd) {
+	
+	PDButtons current;
+	PDButtons pushed;
+	PDButtons released;
+	pd->system->getButtonState(&current, &pushed, &released); // buttons currently pushed, pushed last frame, released last frame
+	
+	float result = 0.0;
+	switch (action) {
+		case A_UP:
+		result = (current & kButtonUp) ? 1.0 : 0.0;
+		break;
+		case A_DOWN:
+		result = (current & kButtonDown) ? 1.0 : 0.0;
+		break;
+		case A_LEFT:
+		result = (current & kButtonLeft) ? 1.0 : 0.0;
+		break;
+		case A_RIGHT:
+		result = (current & kButtonRight) ? 1.0 : 0.0;
+		break;
+		case A_BRAKE_LEFT:
+		break;
+		case A_BRAKE_RIGHT:
+		break;
+		case A_THRUST:
+		result = (current & kButtonA) ? 1.0 : 0.0;
+		break;
+		case A_FIRE:
+		break;
+		case A_CHANGE_VIEW:
+		break;
+		default:
+		break;
+	}
+	return result;
 }
 
-bool input_pressed(uint8_t action) {
-	return actions_pressed[action];
+bool input_pressed(uint8_t action, PlaydateAPI *pd) {
+	
+	PDButtons current;
+	PDButtons pushed;
+	PDButtons released;
+	pd->system->getButtonState(&current, &pushed, &released); // buttons currently pushed, pushed last frame, released last frame
+	
+	bool result = false;
+	switch (action) {
+		case A_CHANGE_VIEW:
+		result = (pushed & kButtonB);
+		break;
+		default:
+		break;
+	}
+	
+	return result;
 }

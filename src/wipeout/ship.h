@@ -137,7 +137,7 @@ typedef struct ship_t {
 
 	// Control Routines
 	vec3_t (*update_strat_func)(struct ship_t *, track_face_t *);
-	void (*update_func)(struct ship_t *);
+	void (*update_func)(struct ship_t *, PlaydateAPI *pd);
 
 	// Audio
 	sfx_t *sfx_engine_thrust;
@@ -149,7 +149,7 @@ typedef struct ship_t {
 void ships_load(PlaydateAPI *pd);
 void ships_init(section_t *section);
 void ships_draw(PlaydateAPI *pd);
-void ships_update(void);
+void ships_update(PlaydateAPI *pd);
 void ships_reset_exhaust_plumes(void);
 
 void ship_init(ship_t *self, section_t *section, int pilot, int position);
@@ -157,7 +157,7 @@ void ship_init_exhaust_plume(ship_t *self);
 void ship_reset_exhaust_plume(ship_t *self);
 void ship_draw(ship_t *self, PlaydateAPI *pd);
 void ship_draw_shadow(ship_t *self, PlaydateAPI *pd);
-void ship_update(ship_t *self);
+void ship_update(ship_t *self, PlaydateAPI *pd);
 void ship_collide_with_track(ship_t *self, track_face_t *face);
 void ship_collide_with_ship(ship_t *self, ship_t *other);
 

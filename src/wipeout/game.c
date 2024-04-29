@@ -569,8 +569,8 @@ void game_init(PlaydateAPI* pd) {
 	g.pilot = PILOT_JOHN_DEKKA;
 	g.circut = CIRCUT_TERRAMAX;
 	g.race_class = RACE_CLASS_RAPIER;
-	g.race_type = RACE_TYPE_TIME_TRIAL; // RACE_TYPE_SINGLE; RACE_TYPE_TIME_TRIAL
-	g.is_attract_mode = true;
+	g.race_type = RACE_TYPE_SINGLE; // RACE_TYPE_SINGLE; RACE_TYPE_TIME_TRIAL
+	g.is_attract_mode = false;
 	scene_current = GAME_SCENE_RACE;
 	scene_next = GAME_SCENE_NONE;
 	mem_reset(global_mem_mark);

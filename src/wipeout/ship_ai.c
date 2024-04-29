@@ -19,7 +19,7 @@ vec3_t ship_ai_strat_avoid(ship_t *self, track_face_t *face);
 vec3_t ship_ai_strat_avoid_other(ship_t *self, track_face_t *face);
 vec3_t ship_ai_strat_zig_zag(ship_t *self, track_face_t *face);
 
-void ship_ai_update_intro(ship_t *self) {
+void ship_ai_update_intro(ship_t *self, PlaydateAPI* pd) {
 	self->temp_target = self->position;
 	self->update_func = ship_ai_update_intro_await_go;
 
@@ -27,7 +27,7 @@ void ship_ai_update_intro(ship_t *self) {
 	sfx_set_position(self->sfx_engine_thrust, self->position, self->velocity, 0.1);
 }
 
-void ship_ai_update_intro_await_go(ship_t *self) {
+void ship_ai_update_intro_await_go(ship_t *self, PlaydateAPI *pd) {
 	self->position.y = self->temp_target.y + sinf(self->update_timer * (80 + self->pilot * 3) * 30 * M_PIF * 2 / 4096) * 32;
 
 	self->update_timer -= system_tick();
@@ -114,7 +114,7 @@ vec3_t ship_ai_strat_zig_zag(ship_t *self, track_face_t *face) {
 }
 
 
-void ship_ai_update_race(ship_t *self) {
+void ship_ai_update_race(ship_t *self, PlaydateAPI *pd) {
 	vec3_t offset_vector = vec3(0, 0, 0);
 
 	ship_t *player = &(g.ships[g.pilot]);
