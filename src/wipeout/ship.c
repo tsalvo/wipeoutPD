@@ -240,7 +240,7 @@ void ship_init(ship_t *self, section_t *section, int pilot, int inv_start_rank) 
 	float spread_base = def.circuts[g.circut].settings[g.race_class].spread_base;
 	float spread_factor = def.circuts[g.circut].settings[g.race_class].spread_factor;
 	int p = inv_start_rank - 1;
-	self->start_accelerate_timer = p * (spread_base + (p * spread_factor)) * (1.0/30.0);
+	self->start_accelerate_timer = p * (spread_base + (p * spread_factor)) * (1.0F/30.0F);
 
 	track_face_t *face = g.track.faces + section->face_start;
 	face++;
@@ -513,8 +513,8 @@ void ship_update(ship_t *self) {
 
 	if (self->pilot == g.pilot) {
 		// get the z exhaust_len related to speed or thrust
-		exhaust_len = self->thrust_mag * 0.0625;
-		exhaust_len += self->speed * 0.00390625;
+		exhaust_len = self->thrust_mag * 0.0625F;
+		exhaust_len += self->speed * 0.00390625F;
 	}
 	else {
 		// for remote ships the z exhaust_len is a constant
@@ -605,7 +605,7 @@ static bool vec3_is_on_face(vec3_t pos, track_face_t *face, float alpha) {
 		vec3_angle(vec3, vec1) +
 		vec3_angle(vec1, vec0);
 
-	return (angle > M_PI * 2 - 0.01);
+	return (angle > M_PIF * 2.0F - 0.01F);
 }
 
 void ship_resolve_wing_collision(ship_t *self, track_face_t *face, float direction) {
@@ -616,7 +616,7 @@ void ship_resolve_wing_collision(ship_t *self, track_face_t *face, float directi
 	self->velocity = vec3_sub(self->velocity, vec3_mulf(self->velocity, 0.5));
 	self->velocity = vec3_add(self->velocity, vec3_mulf(face->normal, 4096)); // div by 4096?
 
-	float magnitude = (fabsf(angle) * self->speed) * M_PI / (4096 * 16.0); // (6 velocity shift, 12 angle shift?)
+	float magnitude = (fabsf(angle) * self->speed) * M_PIF / (4096.0F * 16.0F); // (6 velocity shift, 12 angle shift?)
 
 	vec3_t wing_pos;
 	if (direction > 0) {
@@ -628,7 +628,7 @@ void ship_resolve_wing_collision(ship_t *self, track_face_t *face, float directi
 		wing_pos = vec3_sub(self->position, vec3_mulf(vec3_sub(self->dir_right, self->dir_forward), 256)); // >> 4??
 	}
 
-	if (self->last_impact_time > 0.2) {
+	if (self->last_impact_time > 0.2F) {
 		self->last_impact_time = 0;
 		// sfx_play_at(SFX_IMPACT, wing_pos, vec3(0, 0, 0), 1);
 	}
@@ -643,7 +643,7 @@ void ship_resolve_nose_collision(ship_t *self, track_face_t *face, float directi
 	self->velocity = vec3_sub(self->velocity, vec3_mulf(self->velocity, 0.5));
 	self->velocity = vec3_add(self->velocity, vec3_mulf(face->normal, 4096)); // div by 4096?
 
-	float magnitude = ((self->speed * 0.0625) + 400) * M_PI / (4096.0 * 64.0);
+	float magnitude = ((self->speed * 0.0625F) + 400.0F) * M_PIF / (4096.0F * 64.0F);
 	if (direction > 0) {
 		self->angular_velocity.y += magnitude;
 	}
@@ -651,7 +651,7 @@ void ship_resolve_nose_collision(ship_t *self, track_face_t *face, float directi
 		self->angular_velocity.y -= magnitude;
 	}
 
-	if (self->last_impact_time > 0.2) {
+	if (self->last_impact_time > 0.2F) {
 		self->last_impact_time = 0;
 		// sfx_play_at(SFX_IMPACT, ship_nose(self), vec3(0, 0, 0), 1);
 	}
@@ -935,7 +935,7 @@ bool ship_intersects_ship(ship_t *self, ship_t *other) {
 						vec3_angle(v1, v2) +
 						vec3_angle(v2, v0);
 
-					if ((angle >= M_PI * 2 - M_PI * 0.1)) {
+					if (angle >= M_PIF * 1.9F) {
 						return true;
 					}
 				}
@@ -990,7 +990,7 @@ void ship_collide_with_ship(ship_t *self, ship_t *other) {
 	if (
 		flags_not(self->flags, SHIP_COLL) && 
 		flags_not(other->flags, SHIP_COLL) &&
-		self->last_impact_time > 0.2
+		self->last_impact_time > 0.2F
 	) {
 		self->last_impact_time = 0;
 		vec3_t sound_pos = vec3_mulf(vec3_add(self->position, other->position), 0.5);

@@ -74,8 +74,8 @@ void render_set_screen_size(PlaydateAPI *pd) {
 	screen_h2 = screen_size.y * 0.5F;
 
 	float aspect = (float)screen_size.x / (float)screen_size.y;
-	float fov = (73.75F / 180.0F) * 3.14159265358F;
-	float f = 1.0F / tan(fov / 2.0F);
+	float fov = (73.75F / 180.0F) * M_PIF;
+	float f = 1.0F / tanf(fov / 2.0F);
 	float nf = 1.0F / (NEAR_PLANE - FAR_PLANE);
 	projection_mat = mat4(
 		f / aspect, 0, 0, 0,
@@ -94,9 +94,9 @@ void render_frame_prepare(PlaydateAPI *pd) {
 void render_set_view(vec3_t pos, vec3_t angles) {
 	view_mat = mat4_identity();
 	mat4_set_translation(&view_mat, vec3(0, 0, 0));
-	mat4_set_roll_pitch_yaw(&view_mat, vec3(angles.x, -angles.y + M_PI, angles.z + M_PI));
+	mat4_set_roll_pitch_yaw(&view_mat, vec3(angles.x, -angles.y + M_PIF, angles.z + M_PIF));
 	mat4_translate(&view_mat, vec3_inv(pos));
-	mat4_set_yaw_pitch_roll(&sprite_mat, vec3(-angles.x, angles.y - M_PI, 0));
+	mat4_set_yaw_pitch_roll(&sprite_mat, vec3(-angles.x, angles.y - M_PIF, 0));
 
 	render_set_model_mat(&mat4_identity());
 }
@@ -152,7 +152,7 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	
 	// wireframe
 	LCDColor draw_color;
-	int lineWidth = 1;;
+	int lineWidth = 1;
 	if (avg_z < 0.987F) {
 		draw_color = kColorWhite;
 		lineWidth = 2;
@@ -202,7 +202,6 @@ void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
 		lineWidth = 1;
 	}
 	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, lineWidth, draw_color);
-	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, lineWidth, draw_color);
 	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, lineWidth, draw_color);
 	pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, lineWidth, draw_color);
 	pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, lineWidth, draw_color);

@@ -113,7 +113,7 @@ void ship_player_update_intro_await_go(ship_t *self) {
 
 void ship_player_update_intro_general(ship_t *self) {
 	self->update_timer -= system_tick();
-	self->position.y = self->temp_target.y + sin(self->update_timer * 80.0F * 30.0F * M_PIF * 2.0F / 4096.0F) * 32.0F;
+	self->position.y = self->temp_target.y + sinf(self->update_timer * 80.0F * 30.0F * M_PIF * 2.0F / 4096.0F) * 32.0F;
 
 	// Thrust
 	if (input_state(A_THRUST)) {
@@ -198,15 +198,15 @@ void ship_player_update_race(ship_t *self) {
 		self->ebolt_effect_timer += system_tick();
 
 		// Yank the ship every 0.1 seconds
-		if (self->ebolt_effect_timer > 0.1) {
-			self->ebolt_effect_timer -= 0.1;
+		if (self->ebolt_effect_timer > 0.1F) {
+			self->ebolt_effect_timer -= 0.1F;
 			if (flags_is(self->flags, SHIP_VIEW_INTERNAL)) {
 				// SetShake(2); // FIXME
 			}
 			self->angular_velocity.y += rand_float(-0.5, 0.5);
 
 			if (rand_int(0, 10) == 0) { // approx once per second
-				self->thrust_mag -= self->thrust_mag * 0.25;
+				self->thrust_mag -= self->thrust_mag * 0.25F;
 			}
 		}
 	}
@@ -389,7 +389,7 @@ void ship_player_update_race(ship_t *self) {
 		vec3_t distance = vec3_sub(best_path, self->position);
 
 		if (distance.y > -512) {
-			distance.y = distance.y * 0.0001;
+			distance.y = distance.y * 0.0001F;
 		}
 		else {
 			distance = vec3_mulf(distance, 8);
@@ -430,7 +430,7 @@ void ship_player_update_race(ship_t *self) {
 
 	// Position
 	self->velocity = vec3_add(self->velocity, vec3_mulf(self->acceleration, 30 * system_tick()));
-	self->position = vec3_add(self->position, vec3_mulf(self->velocity, 0.015625 * 30 * system_tick()));
+	self->position = vec3_add(self->position, vec3_mulf(self->velocity, 0.015625F * 30 * system_tick()));
 
 	self->angular_acceleration.x -= self->angular_velocity.x * 0.25F * 30.0F;
 	self->angular_acceleration.z += (self->angular_velocity.y - 0.5F * self->angular_velocity.z) * 30.0F;
@@ -475,15 +475,15 @@ void ship_player_update_rescue(ship_t *self) {
 		self->velocity = vec3_sub(self->temp_target, self->position);
 		vec3_t target_dir = vec3_sub(next->center, self->section->center);
 
-		self->angular_velocity.y = wrap_angle(-atan2(target_dir.x, target_dir.z) - self->angle.y) * (1.0F/16.0F) * 30.0F;
+		self->angular_velocity.y = wrap_angle(-atan2f(target_dir.x, target_dir.z) - self->angle.y) * (1.0F/16.0F) * 30.0F;
 		self->angle.y = wrap_angle(self->angle.y + self->angular_velocity.y * system_tick());
 	}
 
-	self->angle.x -= self->angle.x * 0.125F * 30.0F * system_tick();
-	self->angle.z -= self->angle.z * 0.03125F * 30.0F * system_tick();
+	self->angle.x -= self->angle.x * 0.125F * 30 * system_tick();
+	self->angle.z -= self->angle.z * 0.03125F * 30 * system_tick();
 
-	self->velocity = vec3_sub(self->velocity, vec3_mulf(self->velocity, 0.0625 * 30 * system_tick()));
-	self->position = vec3_add(self->position, vec3_mulf(self->velocity, 0.03125 * 30 * system_tick()));
+	self->velocity = vec3_sub(self->velocity, vec3_mulf(self->velocity, 0.0625F * 30 * system_tick()));
+	self->position = vec3_add(self->position, vec3_mulf(self->velocity, 0.03125F * 30 * system_tick()));
 
 	// Are we done being rescued?
 	float distance = vec3_len(vec3_sub(self->position, self->temp_target));

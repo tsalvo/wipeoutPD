@@ -139,9 +139,9 @@ void track_load_faces(char *file_name, vec3_t *vertices, PlaydateAPI *pd) {
 		vec3_t v1 = vertices[get_i16(bytes, &p)];
 		vec3_t v2 = vertices[get_i16(bytes, &p)];
 		vec3_t v3 = vertices[get_i16(bytes, &p)];
-		tf->normal.x = (float)get_i16(bytes, &p) / 4096.0;
-		tf->normal.y = (float)get_i16(bytes, &p) / 4096.0;
-		tf->normal.z = (float)get_i16(bytes, &p) / 4096.0;
+		tf->normal.x = (float)get_i16(bytes, &p) / 4096.0F;
+		tf->normal.y = (float)get_i16(bytes, &p) / 4096.0F;
+		tf->normal.z = (float)get_i16(bytes, &p) / 4096.0F;
 
 		tf->flags = (uint8_t)get_u16(bytes, &p);
 

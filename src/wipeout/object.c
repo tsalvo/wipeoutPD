@@ -110,7 +110,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 
 			switch (prm_type) {
 			case PRM_TYPE_F3:
-				pd->system->logToConsole("sizeof F3 %d", sizeof(F3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_F3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(F3));
 				prm.f3->coords[0] = get_i16(bytes, &p);
@@ -121,7 +120,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_F4:
-				pd->system->logToConsole("sizeof F4 %d", sizeof(F4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_F4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(F4));
 				prm.f4->coords[0] = get_i16(bytes, &p);
@@ -132,7 +130,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_FT3:
-				pd->system->logToConsole("sizeof FT3 %d", sizeof(FT3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_FT3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(FT3));
 				prm.ft3->coords[0] = get_i16(bytes, &p);
@@ -143,7 +140,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_FT4:
-				pd->system->logToConsole("sizeof FT4 %d", sizeof(FT4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_FT4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(FT4));
 				prm.ft4->coords[0] = get_i16(bytes, &p);
@@ -155,7 +151,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_G3:
-				pd->system->logToConsole("sizeof G3 %d", sizeof(G3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_G3, p=%lu", name, i, p, p);
 				prm.ptr = mem_bump(sizeof(G3));
 				prm.g3->coords[0] = get_i16(bytes, &p);
@@ -168,7 +163,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_G4:
-				pd->system->logToConsole("sizeof G4 %d", sizeof(G4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_G4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(G4));
 				prm.g4->coords[0] = get_i16(bytes, &p);
@@ -182,7 +176,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_GT3:
-				pd->system->logToConsole("sizeof GT3 %d", sizeof(GT3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_GT3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(GT3));
 				prm.gt3->coords[0] = get_i16(bytes, &p);
@@ -195,7 +188,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_GT4:
-				pd->system->logToConsole("sizeof GT4 %d", sizeof(GT4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_GT4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(GT4));
 				prm.gt4->coords[0] = get_i16(bytes, &p);
@@ -211,7 +203,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 
 
 			case PRM_TYPE_LSF3:	
-				pd->system->logToConsole("sizeof LSF3 %d", sizeof(LSF3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSF3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSF3));
 				prm.lsf3->coords[0] = get_i16(bytes, &p);
@@ -222,7 +213,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSF4:
-				pd->system->logToConsole("sizeof LSF4 %d", sizeof(LSF4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSF4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSF4));
 				prm.lsf4->coords[0] = get_i16(bytes, &p);
@@ -234,7 +224,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSFT3:
-				pd->system->logToConsole("sizeof LSFT3 %d", sizeof(LSFT3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSFT3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSFT3));
 				prm.lsft3->coords[0] = get_i16(bytes, &p);
@@ -247,7 +236,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSFT4:
-				pd->system->logToConsole("sizeof LSFT4 %d", sizeof(LSFT4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSFT4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSFT4));
 				prm.lsft4->coords[0] = get_i16(bytes, &p);
@@ -261,7 +249,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSG3:
-				pd->system->logToConsole("sizeof LSG3 %d", sizeof(LSG3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSG3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSG3));
 				prm.lsg3->coords[0] = get_i16(bytes, &p);
@@ -274,7 +261,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSG4:
-				pd->system->logToConsole("sizeof LSG4 %d", sizeof(LSG4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSG4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSG4));
 				prm.lsg4->coords[0] = get_i16(bytes, &p);
@@ -290,7 +276,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSGT3:
-				pd->system->logToConsole("sizeof LSGT3 %d", sizeof(LSGT3));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSGT3, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSGT3));
 				prm.lsgt3->coords[0] = get_i16(bytes, &p);
@@ -303,7 +288,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_LSGT4:
-				pd->system->logToConsole("sizeof LSGT4 %d", sizeof(LSGT4));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_LSGT4, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(LSGT4));
 				prm.lsgt4->coords[0] = get_i16(bytes, &p);
@@ -320,7 +304,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 
 			case PRM_TYPE_TSPR:
 			case PRM_TYPE_BSPR:
-				pd->system->logToConsole("sizeof SPR %d", sizeof(SPR));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_BSPR, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(SPR));
 				prm.spr->coord = get_i16(bytes, &p);
@@ -331,7 +314,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_SPLINE:
-				pd->system->logToConsole("sizeof Spline %d", sizeof(Spline));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_SPLINE, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(Spline));
 				prm.spline->control1.x = get_i32(bytes, &p);
@@ -350,7 +332,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_POINT_LIGHT:
-				pd->system->logToConsole("sizeof PointLight %d", sizeof(PointLight));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_POINT_LIGHT, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(PointLight));
 				prm.pointLight->position.x = get_i32(bytes, &p);
@@ -363,7 +344,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_SPOT_LIGHT:
-				pd->system->logToConsole("sizeof SpotLight %d", sizeof(SpotLight));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_SPOT_LIGHT, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(SpotLight));
 				prm.spotLight->position.x = get_i32(bytes, &p);
@@ -382,7 +362,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				break;
 
 			case PRM_TYPE_INFINITE_LIGHT:
-				pd->system->logToConsole("sizeof InfiniteLight %d", sizeof(InfiniteLight));
 				pd->system->logToConsole("objects_load %s primitive %d = PRM_TYPE_INFINITE_LIGHT, p=%lu", name, i, p);
 				prm.ptr = mem_bump(sizeof(InfiniteLight));
 				prm.infiniteLight->direction.x = get_i16(bytes, &p);
@@ -392,9 +371,9 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 				prm.infiniteLight->color = rgba_from_u32(get_u32(bytes, &p));
 				break;
 
-
 			default:
 				pd->system->logToConsole("objects_load %s primitive %d = BAD TYPE %d, p=%lu", name, i, prm_type, p);
+				prm.ptr = NULL;
 				// // printf("bad primitive type %x \n", prm_type);
 				break;
 			} // switch
