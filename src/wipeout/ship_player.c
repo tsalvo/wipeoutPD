@@ -8,6 +8,7 @@
 #include "droid.h"
 #include "camera.h"
 #include "../utils.h"
+#include "../input.h"
 #include "scene.h"
 
 
@@ -22,8 +23,6 @@
 // #define INPUT_ACTION_MAX 32
 // static float actions_state[INPUT_ACTION_MAX];
 // static bool actions_pressed[INPUT_ACTION_MAX];
-float input_state(uint8_t action, PlaydateAPI *pd);
-bool input_pressed(uint8_t action, PlaydateAPI *pd);
 
 void ship_player_update_sfx(ship_t *self, PlaydateAPI *pd) {
 	float speedf = self->speed * 0.000015F;
@@ -577,61 +576,4 @@ ship_t *ship_player_find_target(ship_t *self) {
 	else {
 		return NULL;
 	}
-}
-
-float input_state(uint8_t action, PlaydateAPI* pd) {
-	
-	PDButtons current;
-	PDButtons pushed;
-	PDButtons released;
-	pd->system->getButtonState(&current, &pushed, &released); // buttons currently pushed, pushed last frame, released last frame
-	
-	float result = 0.0;
-	switch (action) {
-		case A_UP:
-		result = (current & kButtonUp) ? 1.0 : 0.0;
-		break;
-		case A_DOWN:
-		result = (current & kButtonDown) ? 1.0 : 0.0;
-		break;
-		case A_LEFT:
-		result = (current & kButtonLeft) ? 1.0 : 0.0;
-		break;
-		case A_RIGHT:
-		result = (current & kButtonRight) ? 1.0 : 0.0;
-		break;
-		case A_BRAKE_LEFT:
-		break;
-		case A_BRAKE_RIGHT:
-		break;
-		case A_THRUST:
-		result = (current & kButtonA) ? 1.0 : 0.0;
-		break;
-		case A_FIRE:
-		break;
-		case A_CHANGE_VIEW:
-		break;
-		default:
-		break;
-	}
-	return result;
-}
-
-bool input_pressed(uint8_t action, PlaydateAPI *pd) {
-	
-	PDButtons current;
-	PDButtons pushed;
-	PDButtons released;
-	pd->system->getButtonState(&current, &pushed, &released); // buttons currently pushed, pushed last frame, released last frame
-	
-	bool result = false;
-	switch (action) {
-		case A_CHANGE_VIEW:
-		result = (pushed & kButtonB);
-		break;
-		default:
-		break;
-	}
-	
-	return result;
 }

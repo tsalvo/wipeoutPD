@@ -11,6 +11,8 @@
 #include "game.h"
 #include "sfx.h"
 #include "particle.h"
+#include "title.h"
+#include "main_menu.h"
 #include "race.h"
 
 #define TURN_ACCEL(V) NTSC_ACCELERATION(ANGLE_NORM_TO_RADIAN(FIXED_TO_FLOAT(YAW_VELOCITY(V))))
@@ -398,18 +400,6 @@ save_t save = {
 	.has_rapier_class = true,  // for testing; should be false in prod
 	.has_bonus_circuts = true, // for testing; should be false in prod
 
-	// .buttons = {
-	// 	[A_UP] = {INPUT_KEY_UP, INPUT_GAMEPAD_DPAD_UP},
-	// 	[A_DOWN] = {INPUT_KEY_DOWN, INPUT_GAMEPAD_DPAD_DOWN},
-	// 	[A_LEFT] = {INPUT_KEY_LEFT, INPUT_GAMEPAD_DPAD_LEFT},
-	// 	[A_RIGHT] = {INPUT_KEY_RIGHT, INPUT_GAMEPAD_DPAD_RIGHT},
-	// 	[A_BRAKE_LEFT] = {INPUT_KEY_C, INPUT_GAMEPAD_L_SHOULDER},
-	// 	[A_BRAKE_RIGHT] = {INPUT_KEY_V, INPUT_GAMEPAD_R_SHOULDER},
-	// 	[A_THRUST] = {INPUT_KEY_X, INPUT_GAMEPAD_A},
-	// 	[A_FIRE] = {INPUT_KEY_Z, INPUT_GAMEPAD_X},
-	// 	[A_CHANGE_VIEW] = {INPUT_KEY_A, INPUT_GAMEPAD_Y},
-	// },
-
 	.highscores_name = {0,0,0,0},
 	.highscores = {
 		[RACE_CLASS_VENOM] = {
@@ -478,14 +468,13 @@ save_t save = {
 game_t g = {0};
 
 
-
 struct {
 	void (*init)(PlaydateAPI *pd);
 	void (*update)(PlaydateAPI *pd, bool draw_scenery);
 } game_scenes[] = {
 	// [GAME_SCENE_INTRO] = {intro_init, intro_update},
-	// [GAME_SCENE_TITLE] = {title_init, title_update},
-	// [GAME_SCENE_MAIN_MENU] = {main_menu_init, main_menu_update},
+	[GAME_SCENE_TITLE] = {title_init, title_update},
+	[GAME_SCENE_MAIN_MENU] = {main_menu_init, main_menu_update},
 	[GAME_SCENE_RACE] = {race_init, race_update},
 };
 
@@ -566,19 +555,20 @@ void game_init(PlaydateAPI* pd) {
 	// 	}
 	// }
 
-	g.pilot = PILOT_JOHN_DEKKA;
-	g.circut = CIRCUT_TERRAMAX;
-	g.race_class = RACE_CLASS_RAPIER;
-	g.race_type = RACE_TYPE_SINGLE; // RACE_TYPE_SINGLE; RACE_TYPE_TIME_TRIAL
-	g.is_attract_mode = false;
-	scene_current = GAME_SCENE_RACE;
-	scene_next = GAME_SCENE_NONE;
-	mem_reset(global_mem_mark);
-	system_reset_cycle_time();
-	
-	if (scene_current != GAME_SCENE_NONE) {
-		game_scenes[scene_current].init(pd);
-	}
+	game_set_scene(GAME_SCENE_TITLE);
+	// g.pilot = PILOT_JOHN_DEKKA;
+	// g.circut = CIRCUT_TERRAMAX;
+	// g.race_class = RACE_CLASS_VENOM;// RACE_CLASS_RAPIER;
+	// g.race_type = RACE_TYPE_SINGLE; // RACE_TYPE_SINGLE; RACE_TYPE_TIME_TRIAL
+	// g.is_attract_mode = false;
+	// scene_current = GAME_SCENE_RACE;
+	// scene_next = GAME_SCENE_NONE;
+	// mem_reset(global_mem_mark);
+	// system_reset_cycle_time();
+	// 
+	// if (scene_current != GAME_SCENE_NONE) {
+	// 	game_scenes[scene_current].init(pd);
+	// }
 }
 
 void game_reset_championship(void) {
@@ -590,6 +580,18 @@ void game_reset_championship(void) {
 }
 
 void game_update(PlaydateAPI* pd, bool draw_scenery) {
+	if (scene_next != GAME_SCENE_NONE) {
+		scene_current = scene_next;
+		scene_next = GAME_SCENE_NONE;
+		// render_textures_reset(global_textures_len);
+		mem_reset(global_mem_mark);
+		system_reset_cycle_time();
+	
+		if (scene_current != GAME_SCENE_NONE) {
+			game_scenes[scene_current].init(pd);
+		}
+	}
+	
 	if (scene_current != GAME_SCENE_NONE) {
 		game_scenes[scene_current].update(pd, draw_scenery);
 	}
@@ -597,5 +599,5 @@ void game_update(PlaydateAPI* pd, bool draw_scenery) {
 
 void game_set_scene(game_scene_t scene) {
 	// sfx_reset();
-	// scene_next = scene;
+	scene_next = scene;
 }

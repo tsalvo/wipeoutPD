@@ -18,7 +18,7 @@ endif
 VPATH += src
 
 # List C source files here
-SRC = src/main.c src/utils.c src/mem.c src/types.c src/platform.c src/render.c src/system.c src/wipeout/game.c src/wipeout/camera.c src/wipeout/droid.c src/wipeout/object.c src/wipeout/particle.c src/wipeout/race.c src/wipeout/scene.c src/wipeout/sfx.c src/wipeout/ship_ai.c src/wipeout/ship_player.c src/wipeout/ship.c src/wipeout/track.c src/wipeout/weapon.c
+SRC = src/input.c src/main.c src/utils.c src/mem.c src/types.c src/platform.c src/render.c src/system.c src/wipeout/game.c src/wipeout/camera.c src/wipeout/droid.c src/wipeout/menu.c src/wipeout/main_menu.c src/wipeout/object.c src/wipeout/particle.c src/wipeout/race.c src/wipeout/scene.c src/wipeout/sfx.c src/wipeout/ship_ai.c src/wipeout/ship_player.c src/wipeout/ship.c src/wipeout/title.c src/wipeout/track.c src/wipeout/ui.c src/wipeout/weapon.c
 
 ASRC = setup.s
 

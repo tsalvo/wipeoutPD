@@ -128,7 +128,6 @@ void ship_ai_update_race(ship_t *self, PlaydateAPI *pd) {
 
 	int behind_speed = def.circuts[g.circut].settings[g.race_class].behind_speed;
 
-
 	if (flags_not(self->flags, SHIP_FLYING)) {
 		// Find First track base section
 		track_face_t *face = track_section_get_base_face(self->section);
