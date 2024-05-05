@@ -79,7 +79,7 @@ static void page_main_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 }
 
 static void page_main_init(menu_t *menu) {
-	menu_page_t *page = menu_push(menu, "OPTIONS", page_main_draw);
+	menu_page_t *page = menu_push(menu, "MAIN MENU", page_main_draw);
 	flags_add(page->layout_flags, MENU_FIXED);
 	page->title_pos = vec2i(0, 30);
 	page->title_anchor = UI_POS_TOP | UI_POS_CENTER;
@@ -173,7 +173,7 @@ static void page_options_control_set_draw(menu_t *menu, int data, PlaydateAPI *p
 	menu_page_t *page = &menu->pages[menu->index];
 	char remaining_text[2] = { '0' + (uint8_t)clamp(remaining + 1, 0, 3), '\0'};
 	vec2i_t pos = vec2i(page->items_pos.x, page->items_pos.y + 24);
-	ui_draw_text_centered(remaining_text, ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_16, UI_COLOR_DEFAULT, pd);
+	ui_draw_text_centered(remaining_text, ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_16, true, pd);
 
 	if (remaining <= 0) {
 		input_capture(NULL, NULL);
@@ -472,7 +472,7 @@ static void page_race_class_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 	if (!save.has_rapier_class && data == RACE_CLASS_RAPIER) {
 		render_set_view_2d();
 		vec2i_t pos = vec2i(page->items_pos.x, page->items_pos.y + 32);
-		ui_draw_text_centered("NOT AVAILABLE", ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_12, UI_COLOR_ACCENT, pd);
+		ui_draw_text_centered("NOT AVAILABLE", ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_12, true, pd);
 	}
 }
 

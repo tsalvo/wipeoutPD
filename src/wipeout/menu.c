@@ -124,10 +124,10 @@ void menu_update(menu_t *menu, PlaydateAPI *pd) {
 	// Draw Horizontal (confirm)
 	if (flags_is(page->layout_flags, MENU_HORIZONTAL)) {
 		vec2i_t pos = vec2i(0, -20);
-		ui_draw_text_centered(page->title, ui_scaled_pos(page->title_anchor, pos, pd), UI_SIZE_8, UI_COLOR_DEFAULT, pd);
+		ui_draw_text_centered(page->title, ui_scaled_pos(page->title_anchor, pos, pd), UI_SIZE_8, true, pd);
 		if (page->subtitle) {
 			pos.y += 12;
-			ui_draw_text_centered(page->subtitle, ui_scaled_pos(page->title_anchor, pos, pd), UI_SIZE_8, UI_COLOR_DEFAULT, pd);
+			ui_draw_text_centered(page->subtitle, ui_scaled_pos(page->title_anchor, pos, pd), UI_SIZE_8, true, pd);
 		}
 		pos.y += 16;
 
@@ -135,12 +135,12 @@ void menu_update(menu_t *menu, PlaydateAPI *pd) {
 		pos.x = -50;
 		for (int i = 0; i < page->entries_len; i++) {
 			menu_entry_t *entry = &page->entries[i];
-			rgba_t text_color;
+			bool text_color;
 			if (i == page->index && blink()) {
-				text_color = UI_COLOR_ACCENT;
+				text_color = false;
 			}
 			else {
-				text_color = UI_COLOR_DEFAULT;
+				text_color = true;
 			}
 			ui_draw_text_centered(entry->text, ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_16, text_color, pd);
 			pos.x = 60;
@@ -160,21 +160,21 @@ void menu_update(menu_t *menu, PlaydateAPI *pd) {
 			items_pos = page->items_pos;
 		}
 		if (flags_is(page->layout_flags, MENU_ALIGN_CENTER)) {
-			ui_draw_text_centered(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_12, UI_COLOR_ACCENT, pd);
+			ui_draw_text_centered(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_8, true, pd);
 		}
 		else {
-			ui_draw_text(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_12, UI_COLOR_ACCENT, pd);	
+			ui_draw_text(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_8, true, pd);	
 		}
 
 		page = &menu->pages[menu->index];
 		for (int i = 0; i < page->entries_len; i++) {
 			menu_entry_t *entry = &page->entries[i];
-			rgba_t text_color;
+			bool text_color;
 			if (i == page->index && blink()) {
-				text_color = UI_COLOR_ACCENT;
+				text_color = false;
 			}
 			else {
-				text_color = UI_COLOR_DEFAULT;
+				text_color = true;
 			}
 
 			if (flags_is(page->layout_flags, MENU_ALIGN_CENTER)) {

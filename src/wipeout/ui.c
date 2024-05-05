@@ -149,7 +149,7 @@ int ui_number_width(int num, ui_text_size_t size) {
 	return ui_text_width(text_buffer + i, size);
 }
 
-void ui_draw_time(float time, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd) {
+void ui_draw_time(float time, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd) {
 	int msec = time * 1000;
 	int tenths = (msec / 100) % 10;
 	int secs = (msec / 1000) % 60;
@@ -164,10 +164,10 @@ void ui_draw_time(float time, vec2i_t pos, ui_text_size_t size, rgba_t color, Pl
 	text_buffer[5] = 'f'; // "."
 	text_buffer[6] = '0' + tenths;
 	text_buffer[7] = '\0';
-	ui_draw_text(text_buffer, pos, size, color, pd);
+	ui_draw_text(text_buffer, pos, size, accent, pd);
 }
 
-void ui_draw_number(int num, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd) {
+void ui_draw_number(int num, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd) {
 	char text_buffer[16];
 	text_buffer[15] = '\0';
 
@@ -179,14 +179,20 @@ void ui_draw_number(int num, vec2i_t pos, ui_text_size_t size, rgba_t color, Pla
 			break;
 		}
 	}
-	ui_draw_text(text_buffer + i, pos, size, color, pd);
+	ui_draw_text(text_buffer + i, pos, size, accent, pd);
 }
 
-void ui_draw_text(const char *text, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd) {
+void ui_draw_text(const char *text, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd) {
 	
 	int i = 0;
 	for (i = 0; text[i] != 0; i++) {}
-	pd->graphics->setDrawMode( kDrawModeFillWhite );
+	
+	if (accent) {
+		pd->graphics->setDrawMode( kDrawModeFillWhite );
+	} else {
+		pd->graphics->setDrawMode( kDrawModeFillBlack );
+	}
+	
 	pd->graphics->drawText(text, i, kASCIIEncoding, pos.x, pos.y);
 
 	
@@ -215,7 +221,7 @@ void ui_draw_icon(ui_icon_type_t icon, vec2i_t pos, rgba_t color) {
 	// render_push_2d(pos, ui_scaled(render_texture_size(icon_textures[icon])), color, icon_textures[icon]);
 }
 
-void ui_draw_text_centered(const char *text, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd) {
+void ui_draw_text_centered(const char *text, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd) {
 	pos.x -= (ui_text_width(text, size) * ui_scale) >> 1;
-	ui_draw_text(text, pos, size, color, pd);
+	ui_draw_text(text, pos, size, accent, pd);
 }

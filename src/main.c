@@ -31,6 +31,8 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 	if ( event == kEventInit )
 	{
 		pd = playdate;
+		LCDFont* font = pd->graphics->loadFont("wipeoutPD", NULL);
+		pd->graphics->setFont(font);
 		playdate->system->removeAllMenuItems();
 		drawSceneryMenuItem = pd->system->addCheckmarkMenuItem("Scenery", 1, sceneryCheckboxCallback, NULL);
 		playTrack01(playdate);

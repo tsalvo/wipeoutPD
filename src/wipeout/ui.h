@@ -47,12 +47,12 @@ int ui_char_width(char c, ui_text_size_t size);
 int ui_text_width(const char *text, ui_text_size_t size);
 int ui_number_width(int num, ui_text_size_t size);
 
-void ui_draw_text(const char *text, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd);
-void ui_draw_time(float time, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd);
-void ui_draw_number(int num, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd);
+void ui_draw_text(const char *text, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd);
+void ui_draw_time(float time, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd);
+void ui_draw_number(int num, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd);
 
 void ui_draw_image(vec2i_t pos, uint16_t texture);
 void ui_draw_icon(ui_icon_type_t icon, vec2i_t pos, rgba_t color);
-void ui_draw_text_centered(const char *text, vec2i_t pos, ui_text_size_t size, rgba_t color, PlaydateAPI *pd);
+void ui_draw_text_centered(const char *text, vec2i_t pos, ui_text_size_t size, bool accent, PlaydateAPI *pd);
 
 #endif
