@@ -3,6 +3,9 @@
 #include "types.h"
 #include "utils.h"
 #include "platform.h"
+#include <stdint.h>
+#define clearpixel(data, x, y, rowbytes) (data[(y)*rowbytes+(x)/8] |= (1 << (uint8_t)(7 - ((x) % 8))))
+// #include <string.h>
 
 #define NEAR_PLANE 16.0F
 #define FAR_PLANE (RENDER_FADEOUT_FAR)
@@ -88,6 +91,33 @@ void render_set_screen_size(PlaydateAPI *pd) {
 void render_frame_prepare(PlaydateAPI *pd) {
 	// TODO: why can't we use `pd->graphics->clear(kColorWhite)` - it fails to build - ?
 	pd->graphics->fillRect(0, 0, screen_size.x, screen_size.y, kColorBlack); // clear screen 
+	// uint8_t *display = pd->graphics->getFrame();
+	// memset(display, kColorBlack, 240 * 52);
+}
+
+// void setpixel(int x, int y) {
+// 	// uint8_t *display = pd->graphics->getFrame();
+// 	int index = 52 * y + (x >> 3);
+// 	if (index < 240 * 52) {
+// 		uint8_t pixel = display[index];
+// 		pixel |= ((uint8_t)1 << 7 - (x & 7));
+// 		if (index < 240 * 52) {
+// 			memset(display + index, pixel, 1);
+// 		}
+// 	}
+// }
+
+void line_bresenham(int x0, int y0, int x1, int y1, uint8_t *display) {
+	if(x0 < 0 || x0 > 399 || x1 < 0 || x1 > 399 || y0 < 0 || y0 > 239 || y1 < 0 || y1 > 239) { return; }
+	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+	int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+	int err = (dx > dy ? dx : -dy) / 2;
+
+	while (clearpixel(display, x0, y0, 52), x0 != x1 || y0 != y1) {
+		int e2 = err;
+		if (e2 > -dx) { err -= dy; x0 += sx; }
+		if (e2 <  dy) { err += dx; y0 += sy; }
+	}
 }
 
 
@@ -151,21 +181,22 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	float avg_z = (p0.z + p1.z + p2.z) * 0.33333F;
 	
 	// wireframe
-	LCDColor draw_color;
-	int lineWidth = 1;
-	if (avg_z < 0.987F) {
-		draw_color = kColorWhite;
-		lineWidth = 2;
-	} else if (avg_z < 0.9955F) {
-		draw_color = kColorWhite;
-	} else if (avg_z < 0.9989F) {
-		draw_color = (LCDColor)grey50;
-	} else {
-		draw_color = (LCDColor)grey25;
-	}
-	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, lineWidth, draw_color);
-	pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, lineWidth, draw_color);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, lineWidth, draw_color);
+	// LCDColor draw_color;
+	// if (avg_z < 0.993F) {
+	// 	draw_color = kColorWhite;
+	// } else if (avg_z < 0.9983F) {
+	// 	draw_color = (LCDColor)grey50;
+	// } else {
+	// 	draw_color = (LCDColor)grey25;
+	// }
+	
+	uint8_t *display = pd->graphics->getFrame();
+	line_bresenham(sc0.x, sc0.y, sc1.x, sc1.y, display);
+	line_bresenham(sc1.x, sc1.y, sc2.x, sc2.y, display);
+	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, display);
+	pd->graphics->markUpdatedRows(0, LCD_ROWS-1);	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, draw_color);
+	// pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, draw_color);
+	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, draw_color);
 }
 
 void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
@@ -186,25 +217,25 @@ void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
 	float avg_z = (p0.z + p1.z + p2.z + p3.z) * 0.25F;
 	
 	// wireframe
-	LCDColor draw_color;
-	int lineWidth;
-	if (avg_z < 0.987F) {
-		draw_color = kColorWhite;
-		lineWidth = 2;
-	} else if (avg_z < 0.9955F) {
-		draw_color = kColorWhite;
-		lineWidth = 1;
-	} else if (avg_z < 0.9989F) {
-		draw_color = (LCDColor)grey50;
-		lineWidth = 1;
-	} else {
-		draw_color = (LCDColor)grey25;
-		lineWidth = 1;
-	}
-	pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, lineWidth, draw_color);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, lineWidth, draw_color);
-	pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, lineWidth, draw_color);
-	pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, lineWidth, draw_color);
+	// LCDColor draw_color;
+	// if (avg_z < 0.993F) {
+	// 	draw_color = kColorWhite;
+	// } else if (avg_z < 0.9983F) {
+	// 	draw_color = (LCDColor)grey50;
+	// } else {
+	// 	draw_color = (LCDColor)grey25;
+	// }
+	uint8_t *display = pd->graphics->getFrame();
+	line_bresenham(sc0.x, sc0.y, sc1.x, sc1.y, display);
+	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, display);
+	line_bresenham(sc2.x, sc2.y, sc3.x, sc3.y, display);
+	line_bresenham(sc3.x, sc3.y, sc1.x, sc1.y, display);
+	pd->graphics->markUpdatedRows(0, LCD_ROWS-1);
+	
+	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, draw_color);
+	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, draw_color);
+	// pd->graphics->drawLine(sc2.x, sc2.y, sc3.x, sc3.y, 1, draw_color);
+	// pd->graphics->drawLine(sc3.x, sc3.y, sc1.x, sc1.y, 1, draw_color);
 }
 
 void render_push_sprite(vec3_t pos, vec2i_t size, rgba_t color, uint16_t texture_index) {
