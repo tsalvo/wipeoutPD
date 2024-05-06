@@ -491,7 +491,7 @@ void game_init(PlaydateAPI* pd) {
 	// sfx_load(pd);
 	// hud_load(pd);
 	ships_load(pd);
-	// droid_load(pd);
+	droid_load(pd);
 	// particles_load(pd);
 	// weapons_load(pd);
 
@@ -501,74 +501,7 @@ void game_init(PlaydateAPI* pd) {
 	// sfx_music_mode(SFX_MUSIC_PAUSED);
 	// sfx_music_play(rand_int(0, len(def.music)));
 
-
-	// System binds; always fixed
-	// Keyboard
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_UP, A_MENU_UP);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_DOWN, A_MENU_DOWN);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_LEFT, A_MENU_LEFT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_RIGHT, A_MENU_RIGHT);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_W, A_MENU_UP);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_S, A_MENU_DOWN);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_A, A_MENU_LEFT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_D, A_MENU_RIGHT);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_K, A_MENU_UP);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_J, A_MENU_DOWN);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_H, A_MENU_LEFT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_L, A_MENU_RIGHT);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_BACKSPACE, A_MENU_BACK);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_C, A_MENU_BACK);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_V, A_MENU_BACK);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_X, A_MENU_SELECT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_RETURN, A_MENU_START);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_KEY_ESCAPE, A_MENU_QUIT);
-// 
-// 	// Gamepad
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_DPAD_UP, A_MENU_UP);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_DPAD_DOWN, A_MENU_DOWN);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_DPAD_LEFT, A_MENU_LEFT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_DPAD_RIGHT, A_MENU_RIGHT);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_L_STICK_UP, A_MENU_UP);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_L_STICK_DOWN, A_MENU_DOWN);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_L_STICK_LEFT, A_MENU_LEFT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_L_STICK_RIGHT, A_MENU_RIGHT);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_X, A_MENU_BACK);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_B, A_MENU_BACK);
-// 
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_A, A_MENU_SELECT);
-// 	input_bind(INPUT_LAYER_SYSTEM, INPUT_GAMEPAD_START, A_MENU_START);
-	
-
-	// // User defined, loaded from the save struct
-	// for (int action = 0; action < len(save.buttons); action++) {
-	// 	if (save.buttons[action][0] != INPUT_INVALID) {
-	// 		input_bind(INPUT_LAYER_USER, save.buttons[action][0], action);
-	// 	}
-	// 	if (save.buttons[action][1] != INPUT_INVALID) {
-	// 		input_bind(INPUT_LAYER_USER, save.buttons[action][1], action);
-	// 	}
-	// }
-
 	game_set_scene(GAME_SCENE_TITLE);
-	// g.pilot = PILOT_JOHN_DEKKA;
-	// g.circut = CIRCUT_TERRAMAX;
-	// g.race_class = RACE_CLASS_VENOM;// RACE_CLASS_RAPIER;
-	// g.race_type = RACE_TYPE_SINGLE; // RACE_TYPE_SINGLE; RACE_TYPE_TIME_TRIAL
-	// g.is_attract_mode = false;
-	// scene_current = GAME_SCENE_RACE;
-	// scene_next = GAME_SCENE_NONE;
-	// mem_reset(global_mem_mark);
-	// system_reset_cycle_time();
-	// 
-	// if (scene_current != GAME_SCENE_NONE) {
-	// 	game_scenes[scene_current].init(pd);
-	// }
 }
 
 void game_reset_championship(void) {

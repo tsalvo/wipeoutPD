@@ -37,11 +37,11 @@ static struct {
 } models;
 
 static void draw_model(Object *model, vec2_t offset, vec3_t pos, float rotation, PlaydateAPI *pd) {
-	render_set_view(vec3(0,0,0), vec3(0, -M_PI, -M_PI));
+	render_set_view(vec3(0,0,0), vec3(0, -M_PIF, -M_PIF));
 	render_set_screen_position(offset);
 	mat4_t mat = mat4_identity();
 	mat4_set_translation(&mat, pos);
-	mat4_set_yaw_pitch_roll(&mat, vec3(0, rotation, M_PI));
+	mat4_set_yaw_pitch_roll(&mat, vec3(0, rotation, M_PIF));
 	object_draw(model, &mat, pd);
 	render_set_screen_position(vec2(0, 0));
 }
@@ -72,8 +72,8 @@ static void button_quit(menu_t *menu, int data) {
 
 static void page_main_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 	switch (data) {
-		case 0: draw_model(g.ships[0].model, vec2(0, -0.1), vec3(0, 0, -700), system_cycle_time(), pd); break;
-		case 1: draw_model(models.misc.options, vec2(0, -0.2), vec3(0, 0, -700), system_cycle_time(), pd); break;
+		case 0: draw_model(g.ships[0].model, vec2(0, -0.1F), vec3(0, 0, -700), system_cycle_time(), pd); break;
+		case 1: draw_model(models.misc.options, vec2(0, -0.2F), vec3(0, 0, -700), system_cycle_time(), pd); break;
 		// case 2: draw_model(models.misc.msdos, vec2(0, -0.2), vec3(0, 0, -700), system_cycle_time(), pd); break;
 	}
 }
@@ -114,8 +114,8 @@ static void button_highscores(menu_t *menu, int data) {
 static void page_options_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 	switch (data) {
 		// case 0: draw_model(models.controller, vec2(0, -0.1), vec3(0, 0, -6000), system_cycle_time(), pd); break;
-		case 0: draw_model(models.rescue, vec2(0, -0.2), vec3(0, 0, -700), system_cycle_time(), pd); break; // TODO: needs better model
-		case 1: draw_model(models.options.headphones, vec2(0, -0.2), vec3(0, 0, -300), system_cycle_time(), pd); break;
+		case 0: draw_model(models.rescue, vec2(0, -0.2F), vec3(0, 0, -700), system_cycle_time(), pd); break; // TODO: needs better model
+		case 1: draw_model(models.options.headphones, vec2(0, -0.2F), vec3(0, 0, -300), system_cycle_time(), pd); break;
 		// case 3: draw_model(models.options.stopwatch, vec2(0, -0.2), vec3(0, 0, -400), system_cycle_time(), pd); break;
 	}
 }
@@ -315,12 +315,12 @@ static void page_options_video_init(menu_t *menu) {
 // Options Audio
 
 static void toggle_music_volume(menu_t *menu, int data) {
-	save.music_volume = (float)data * 0.1;
+	save.music_volume = (float)data * 0.1F;
 	save.is_dirty = true;
 }
 
 static void toggle_sfx_volume(menu_t *menu, int data) {
-	save.sfx_volume = (float)data * 0.1;	
+	save.sfx_volume = (float)data * 0.1F;	
 	save.is_dirty = true;
 }
 
@@ -347,66 +347,6 @@ static int options_highscores_race_class;
 static int options_highscores_circut;
 static int options_highscores_tab;
 
-static void page_options_highscores_viewer_input_handler() {
-// 	int last_race_class_index = options_highscores_race_class;
-// 	int last_circut_index = options_highscores_circut;
-// 
-// 	if (input_pressed(A_MENU_UP)) {
-// 		options_highscores_race_class--;
-// 	}
-// 	else if (input_pressed(A_MENU_DOWN)) {
-// 		options_highscores_race_class++;
-// 	}
-// 
-// 	if (input_pressed(A_MENU_LEFT)) {
-// 		options_highscores_circut--;
-// 	}
-// 	else if (input_pressed(A_MENU_RIGHT)) {
-// 		options_highscores_circut++;
-// 	}
-// 
-// 	if (options_highscores_race_class >= NUM_RACE_CLASSES) {
-// 		options_highscores_race_class = 0;
-// 	}
-// 	if (options_highscores_race_class < 0) {
-// 		options_highscores_race_class = NUM_RACE_CLASSES - 1;
-// 	}
-// 
-// 	if (options_highscores_circut >= NUM_CIRCUTS) {
-// 		options_highscores_circut = 0;
-// 	}
-// 	if (options_highscores_circut < 0) {
-// 		options_highscores_circut = NUM_CIRCUTS - 1;
-// 	}
-// 
-// 	if ((last_race_class_index != options_highscores_race_class) ||
-// 		(last_circut_index != options_highscores_circut)) {
-// 		sfx_play(SFX_MENU_MOVE);
-// 	}
-}
-
-static void page_options_highscores_viewer_draw(menu_t *menu, int data) {
-// 	ui_pos_t anchor = UI_POS_MIDDLE | UI_POS_CENTER;
-// 
-// 	vec2i_t pos = vec2i(0, -70);
-// 	ui_draw_text_centered(def.race_classes[options_highscores_race_class].name, ui_scaled_pos(anchor, pos), UI_SIZE_12, UI_COLOR_DEFAULT, pd);
-// 	pos.y += 16;
-// 	ui_draw_text_centered(def.circuts[options_highscores_circut].name, ui_scaled_pos(anchor, pos), UI_SIZE_12, UI_COLOR_ACCENT, pd);
-// 	
-// 	vec2i_t entry_pos = vec2i(pos.x - 110, pos.y + 24);
-// 	highscores_t *hs = &save.highscores[options_highscores_race_class][options_highscores_circut][options_highscores_tab];
-// 	for (int i = 0; i < NUM_HIGHSCORES; i++) {
-// 		ui_draw_text(hs->entries[i].name, ui_scaled_pos(anchor, entry_pos), UI_SIZE_16, UI_COLOR_DEFAULT);
-// 		ui_draw_time(hs->entries[i].time, ui_scaled_pos(anchor, vec2i(entry_pos.x + 110, entry_pos.y)), UI_SIZE_16, UI_COLOR_DEFAULT);
-// 		entry_pos.y += 24;
-// 	}
-// 
-// 	vec2i_t lap_pos = vec2i(entry_pos.x - 40, entry_pos.y + 8);
-// 	ui_draw_text("LAP RECORD", ui_scaled_pos(anchor, lap_pos), UI_SIZE_12, UI_COLOR_ACCENT);
-// 	ui_draw_time(hs->lap_record, ui_scaled_pos(anchor, vec2i(lap_pos.x + 180, lap_pos.y - 4)), UI_SIZE_16, UI_COLOR_DEFAULT);
-// 
-// 	page_options_highscores_viewer_input_handler();
-}
 
 static void page_options_highscores_viewer_init(menu_t *menu) {
 // 	menu_page_t *page;
@@ -467,7 +407,7 @@ static void page_race_class_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 	page->title_anchor = UI_POS_TOP | UI_POS_CENTER;
 	page->items_pos = vec2i(0, -110);
 	page->items_anchor = UI_POS_BOTTOM | UI_POS_CENTER;
-	draw_model(models.race_classes[data], vec2(0, -0.2), vec3(0, 0, -350), system_cycle_time(), pd);
+	draw_model(models.race_classes[data], vec2(0, -0.2F), vec3(0, 0, -350), system_cycle_time(), pd);
 
 	if (!save.has_rapier_class && data == RACE_CLASS_RAPIER) {
 		render_set_view_2d();
@@ -496,9 +436,9 @@ static void button_race_type_select(menu_t *menu, int data) {
 
 static void page_race_type_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 	switch (data) {
-		case 0: draw_model(models.misc.championship, vec2(0, -0.2), vec3(0, 0, -400), system_cycle_time(), pd); break;
-		case 1: draw_model(models.misc.single_race, vec2(0, -0.2), vec3(0, 0, -400), system_cycle_time(), pd); break;
-		case 2: draw_model(models.options.stopwatch, vec2(0, -0.2), vec3(0, 0, -400), system_cycle_time(), pd); break;
+		case 0: draw_model(models.misc.championship, vec2(0, -0.2F), vec3(0, 0, -400), system_cycle_time(), pd); break;
+		case 1: draw_model(models.misc.single_race, vec2(0, -0.2F), vec3(0, 0, -400), system_cycle_time(), pd); break;
+		case 2: draw_model(models.options.stopwatch, vec2(0, -0.2F), vec3(0, 0, -400), system_cycle_time(), pd); break;
 	}
 }
 
@@ -526,9 +466,9 @@ static void button_team_select(menu_t *menu, int data) {
 
 static void page_team_draw(menu_t *menu, int data, PlaydateAPI *pd) {
 	int team_model_index = (data + 3) % 4; // models in the prm are shifted by -1
-	draw_model(models.teams[team_model_index], vec2(0, -0.2), vec3(0, 0, -10000), system_cycle_time(), pd);
-	draw_model(g.ships[def.teams[data].pilots[0]].model, vec2(0, -0.3), vec3(-700, -800, -1300), system_cycle_time()*1.1, pd);
-	draw_model(g.ships[def.teams[data].pilots[1]].model, vec2(0, -0.3), vec3( 700, -800, -1300), system_cycle_time()*1.2, pd);
+	draw_model(models.teams[team_model_index], vec2(0, -0.2F), vec3(0, 0, -10000), system_cycle_time(), pd);
+	draw_model(g.ships[def.teams[data].pilots[0]].model, vec2(0, -0.3F), vec3(-700, -800, -1300), system_cycle_time()*1.1F, pd);
+	draw_model(g.ships[def.teams[data].pilots[1]].model, vec2(0, -0.3F), vec3( 700, -800, -1300), system_cycle_time()*1.2F, pd);
 }
 
 static void page_team_init(menu_t *menu) {
@@ -561,7 +501,7 @@ static void button_pilot_select(menu_t *menu, int data) {
 }
 
 static void page_pilot_draw(menu_t *menu, int data, PlaydateAPI *pd) {
-	draw_model(models.pilots[def.pilots[data].logo_model], vec2(0, -0.2), vec3(0, 0, -10000), system_cycle_time(), pd);
+	draw_model(models.pilots[def.pilots[data].logo_model], vec2(0, -0.2F), vec3(0, 0, -10000), system_cycle_time(), pd);
 }
 
 static void page_pilot_init(menu_t *menu) {

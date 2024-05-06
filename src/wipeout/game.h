@@ -21,8 +21,6 @@
 #define SAVE_DATA_MAGIC 0x64736f77
 
 
-
-
 typedef enum {
 	// GAME_SCENE_INTRO,
 	GAME_SCENE_TITLE,

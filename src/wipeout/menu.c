@@ -9,7 +9,7 @@
 
 bool blink(void) {
 	// blink 30 times per second
-	return fmod(system_cycle_time(), 1.0/15.0) < 1.0/30.0;
+	return fmodf(system_cycle_time(), 1.0F/15.0F) < 1.0F/30.0F;
 }
 
 void menu_reset(menu_t *menu) {
@@ -159,12 +159,12 @@ void menu_update(menu_t *menu, PlaydateAPI *pd) {
 			title_pos = page->title_pos;
 			items_pos = page->items_pos;
 		}
-		if (flags_is(page->layout_flags, MENU_ALIGN_CENTER)) {
-			ui_draw_text_centered(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_8, true, pd);
-		}
-		else {
-			ui_draw_text(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_8, true, pd);	
-		}
+		// if (flags_is(page->layout_flags, MENU_ALIGN_CENTER)) {
+		// 	ui_draw_text_centered(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_8, true, pd);
+		// }
+		// else {
+		// 	ui_draw_text(page->title, ui_scaled_pos(page->title_anchor, title_pos, pd), UI_SIZE_8, true, pd);	
+		// }
 
 		page = &menu->pages[menu->index];
 		for (int i = 0; i < page->entries_len; i++) {
@@ -176,13 +176,15 @@ void menu_update(menu_t *menu, PlaydateAPI *pd) {
 			else {
 				text_color = true;
 			}
+			
+			ui_draw_text(entry->text, vec2i(5, (i + 1) * 20), UI_SIZE_8, text_color, pd);
 
-			if (flags_is(page->layout_flags, MENU_ALIGN_CENTER)) {
-				ui_draw_text_centered(entry->text, ui_scaled_pos(page->items_anchor, items_pos, pd), UI_SIZE_8, text_color, pd);
-			}
-			else {
-				ui_draw_text(entry->text, ui_scaled_pos(page->items_anchor, items_pos, pd), UI_SIZE_8, text_color, pd);
-			}
+			// if (flags_is(page->layout_flags, MENU_ALIGN_CENTER)) {
+			// 	ui_draw_text_centered(entry->text, ui_scaled_pos(page->items_anchor, items_pos, pd), UI_SIZE_8, text_color, pd);
+			// }
+			// else {
+			// 	ui_draw_text(entry->text, ui_scaled_pos(page->items_anchor, items_pos, pd), UI_SIZE_8, text_color, pd);
+			// }
 
 			if (entry->type == MENU_ENTRY_TOGGLE) {
 				vec2i_t toggle_pos = items_pos;
@@ -221,7 +223,7 @@ void menu_update(menu_t *menu, PlaydateAPI *pd) {
 				entry->select_func(menu, entry->data);
 			}
 		}
-		else if (input_pressed(A_MENU_RIGHT, pd) || input_pressed(A_MENU_SELECT, pd) || input_pressed(A_MENU_START, pd)) {
+		else if (input_pressed(A_MENU_RIGHT, pd) || input_pressed(A_MENU_SELECT, pd)) {
 			sfx_play(SFX_MENU_SELECT);
 			entry->data = (entry->data + 1) % entry->options_len;
 			if (entry->select_func) {

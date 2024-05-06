@@ -22,7 +22,7 @@ float vec3_angle(vec3_t a, vec3_t b) {
 	float cosine = (magnitude == 0)
 		? 1
 		: vec3_dot(a, b) / magnitude;
-	return acos(clamp(cosine, -1, 1));
+	return acosf(clamp(cosine, -1, 1));
 }
 
 vec3_t vec3_transform(vec3_t a, mat4_t *mat) {
@@ -60,12 +60,12 @@ void mat4_set_translation(mat4_t *mat, vec3_t pos) {
 }
 
 void mat4_set_yaw_pitch_roll(mat4_t *mat, vec3_t rot) {
-	float sx = sin( rot.x);
-	float sy = sin(-rot.y);
-	float sz = sin(-rot.z);
-	float cx = cos( rot.x);
-	float cy = cos(-rot.y);
-	float cz = cos(-rot.z);
+	float sx = sinf( rot.x);
+	float sy = sinf(-rot.y);
+	float sz = sinf(-rot.z);
+	float cx = cosf( rot.x);
+	float cy = cosf(-rot.y);
+	float cz = cosf(-rot.z);
 
 	mat->cols[0][0] = cy * cz + sx * sy * sz;
 	mat->cols[1][0] = cz * sx * sy - cy * sz;
@@ -79,12 +79,12 @@ void mat4_set_yaw_pitch_roll(mat4_t *mat, vec3_t rot) {
 }
 
 void mat4_set_roll_pitch_yaw(mat4_t *mat, vec3_t rot) {
-	float sx = sin( rot.x);
-	float sy = sin(-rot.y);
-	float sz = sin(-rot.z);
-	float cx = cos( rot.x);
-	float cy = cos(-rot.y);
-	float cz = cos(-rot.z);
+	float sx = sinf( rot.x);
+	float sy = sinf(-rot.y);
+	float sz = sinf(-rot.z);
+	float cx = cosf( rot.x);
+	float cy = cosf(-rot.y);
+	float cz = cosf(-rot.z);
 
 	mat->cols[0][0] = cy * cz - sx * sy * sz;
 	mat->cols[1][0] = -cx * sz;

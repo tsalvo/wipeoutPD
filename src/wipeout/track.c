@@ -262,7 +262,8 @@ void track_draw(camera_t *camera, PlaydateAPI *pd) {
 		float cam_dot = vec3_dot(diff, cam_dir);
 		float dist_sq = vec3_dot(diff, diff);
 		if (
-			cam_dot < s->radius && // FIXME: should use the bounding radius of the section
+			// TODO: this was originally cam_dot < 2048, with a note about how it should use the bounding radius of the section.  but the radius always seems to be zero
+			cam_dot < 2048.0F && // s->radius &&
 			dist_sq < (RENDER_FADEOUT_FAR * RENDER_FADEOUT_FAR)
 		) {
 			// printf("**TS** track draw section %d cam_dot %f radius %f\n", i, cam_dot, s->radius);
@@ -272,25 +273,25 @@ void track_draw(camera_t *camera, PlaydateAPI *pd) {
 }
 
 void track_cycle_pickups(void) {
-	float pickup_cycle_time = 1.5 * system_cycle_time();
-
-	for (int i = 0; i < g.track.pickups_len; i++) {
-		if (flags_is(g.track.pickups[i].face->flags, FACE_PICKUP_COLLECTED)) {
-			flags_rm(g.track.pickups[i].face->flags, FACE_PICKUP_COLLECTED);
-			g.track.pickups[i].cooldown_timer = TRACK_PICKUP_COOLDOWN_TIME;
-		}
-		else if (g.track.pickups[i].cooldown_timer <= 0) {
-			flags_add(g.track.pickups[i].face->flags, FACE_PICKUP_ACTIVE);
-			track_face_set_color(g.track.pickups[i].face, rgb(
-				sin( pickup_cycle_time + i) * 127 + 128,
-				cos( pickup_cycle_time + i) * 127 + 128,
-				sin(-pickup_cycle_time - i) * 127 + 128
-			));
-		}
-		else{
-			g.track.pickups[i].cooldown_timer -= system_tick();
-		}
-	}
+// 	float pickup_cycle_time = 1.5 * system_cycle_time();
+// 
+// 	for (int i = 0; i < g.track.pickups_len; i++) {
+// 		if (flags_is(g.track.pickups[i].face->flags, FACE_PICKUP_COLLECTED)) {
+// 			flags_rm(g.track.pickups[i].face->flags, FACE_PICKUP_COLLECTED);
+// 			g.track.pickups[i].cooldown_timer = TRACK_PICKUP_COOLDOWN_TIME;
+// 		}
+// 		else if (g.track.pickups[i].cooldown_timer <= 0) {
+// 			flags_add(g.track.pickups[i].face->flags, FACE_PICKUP_ACTIVE);
+// 			track_face_set_color(g.track.pickups[i].face, rgb(
+// 				sin( pickup_cycle_time + i) * 127 + 128,
+// 				cos( pickup_cycle_time + i) * 127 + 128,
+// 				sin(-pickup_cycle_time - i) * 127 + 128
+// 			));
+// 		}
+// 		else{
+// 			g.track.pickups[i].cooldown_timer -= system_tick();
+// 		}
+// 	}
 }
 
 void track_face_set_color(track_face_t *face, rgb_t color) {
@@ -314,7 +315,7 @@ section_t *track_nearest_section(vec3_t pos, section_t *section, float *distance
 
 	// Find vector from ship center to track section under
 	// consideration
-	float shortest_distance = 1000000000.0;
+	float shortest_distance = 1000000000.0F;
 	section_t *nearest_section = section;
 	section_t *junction = NULL;
 	for (int i = 0; i < TRACK_SEARCH_LOOK_AHEAD; i++) {

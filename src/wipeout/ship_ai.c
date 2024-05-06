@@ -24,7 +24,7 @@ void ship_ai_update_intro(ship_t *self, PlaydateAPI* pd) {
 	self->update_func = ship_ai_update_intro_await_go;
 
 	self->sfx_engine_thrust = sfx_reserve_loop(SFX_ENGINE_REMOTE);
-	sfx_set_position(self->sfx_engine_thrust, self->position, self->velocity, 0.1);
+	sfx_set_position(self->sfx_engine_thrust, self->position, self->velocity, 0.1F);
 }
 
 void ship_ai_update_intro_await_go(ship_t *self, PlaydateAPI *pd) {
@@ -40,14 +40,14 @@ vec3_t ship_ai_strat_hold_left(ship_t *self, track_face_t *face) {
 	vec3_t fv1 = face->tris[0].vertices[1];
 	vec3_t fv2 = face->tris[0].vertices[0];
 
-	return vec3_mulf(vec3_sub(fv1, fv2), 0.5);
+	return vec3_mulf(vec3_sub(fv1, fv2), 0.5F);
 }
 
 vec3_t ship_ai_strat_hold_right(ship_t *self, track_face_t *face) {
 	vec3_t fv1 = face->tris[0].vertices[0];
 	vec3_t fv2 = face->tris[0].vertices[1];
 
-	return vec3_mulf(vec3_sub(fv1, fv2), 0.5);
+	return vec3_mulf(vec3_sub(fv1, fv2), 0.5F);
 }
 
 

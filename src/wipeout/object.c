@@ -75,7 +75,6 @@ Object *objects_load(char *name, texture_list_t tl, PlaydateAPI* pd) {
 		p += 4; // skeleton next
 
 		object->radius = 0;
-		pd->system->logToConsole("sizeof vec3_t %d", sizeof(vec3_t));
 		object->vertices = mem_bump(object->vertices_len * sizeof(vec3_t));
 		for (int i = 0; i < object->vertices_len; i++) {
 			object->vertices[i].x = get_i16(bytes, &p);

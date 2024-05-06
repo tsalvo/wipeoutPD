@@ -26,10 +26,10 @@ void camera_init(camera_t *camera, section_t *section) {
 }
 
 vec3_t camera_forward(camera_t *camera) {
-	float sx = sin(camera->angle.x);
-	float cx = cos(camera->angle.x);
-	float sy = sin(camera->angle.y);
-	float cy = cos(camera->angle.y);
+	float sx = sinf(camera->angle.x);
+	float cx = cosf(camera->angle.x);
+	float sy = sinf(camera->angle.y);
+	float cy = cosf(camera->angle.y);
 	return vec3(-(sy * cx), -sx, (cy * cx));
 }
 
@@ -67,7 +67,7 @@ void camera_update_race_internal(camera_t *camera, ship_t *ship, droid_t *droid)
 
 void camera_update_race_intro(camera_t *camera, ship_t *ship, droid_t *droid) {
 	// Set to final position
-	vec3_t pos = vec3_sub(ship->position, vec3_mulf(ship->dir_forward, 0.25 * 4096));
+	vec3_t pos = vec3_sub(ship->position, vec3_mulf(ship->dir_forward, 0.25F * 4096));
 
 	pos.x += sinf(( (ship->update_timer - UPDATE_TIME_RACE_VIEW) * 30.0F * 3.0F * M_PIF * 2.0F) / 4096.0F) * 4096.0F;
 	pos.y -= (2.0F *  (ship->update_timer - UPDATE_TIME_RACE_VIEW) * 30.0F) + 200.0F;

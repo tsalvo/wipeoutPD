@@ -1,6 +1,7 @@
 #include "../mem.h"
 #include "../platform.h"
 #include "../system.h"
+#include "../input.h"
 #include "../utils.h"
 
 #include "object.h"
@@ -87,12 +88,11 @@ void race_update(PlaydateAPI *pd, bool draw_scenery) {
 		}
 
 		if (g.is_attract_mode) {
-			// TODO: revert this
-			// if (input_pressed(A_MENU_START) || input_pressed(A_MENU_SELECT)) {
-			// 	game_set_scene(GAME_SCENE_MAIN_MENU);
-			// }
+			if (input_pressed(A_MENU_SELECT, pd)) {
+				game_set_scene(GAME_SCENE_MAIN_MENU);
+			}
 			// float duration = system_time() - attract_start_time;
-			// if ((!active_menu && duration > 30) || duration > 120) {
+			// if (duration > 30) {
 			// 	game_set_scene(GAME_SCENE_TITLE);
 			// }
 		}

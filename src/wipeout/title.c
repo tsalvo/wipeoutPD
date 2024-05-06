@@ -23,8 +23,8 @@ void title_update(PlaydateAPI *pd, bool draw_scenery) {
 	// render_push_2d(vec2i(0, 0), render_size(), rgba(128, 128, 128, 255), title_image);
 	ui_draw_text_centered("PRESS A", ui_scaled_pos(UI_POS_BOTTOM | UI_POS_CENTER, vec2i(0, -40), pd), UI_SIZE_8, true, pd);
 	
-	if (input_pressed(A_MENU_SELECT, pd) || input_pressed(A_MENU_START, pd)) {
-		// sfx_play(SFX_MENU_SELECT);
+	if (input_pressed(A_MENU_SELECT, pd)) {
+		sfx_play(SFX_MENU_SELECT);
 		game_set_scene(GAME_SCENE_MAIN_MENU);
 	}
 

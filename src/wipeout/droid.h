@@ -7,10 +7,10 @@
 #include "sfx.h"
 #include "pd_api.h"
 
-#define DROID_UPDATE_TIME_INITIAL (800 * (1.0/30.0))
-#define DROID_UPDATE_TIME_INTRO_1 (770 * (1.0/30.0))
-#define DROID_UPDATE_TIME_INTRO_2 (710 * (1.0/30.0))
-#define DROID_UPDATE_TIME_INTRO_3 (400 * (1.0/30.0))
+#define DROID_UPDATE_TIME_INITIAL (800 * (1.0F/30.0F))
+#define DROID_UPDATE_TIME_INTRO_1 (770 * (1.0F/30.0F))
+#define DROID_UPDATE_TIME_INTRO_2 (710 * (1.0F/30.0F))
+#define DROID_UPDATE_TIME_INTRO_3 (400 * (1.0F/30.0F))
 
 typedef struct droid_t {
 	section_t *section;

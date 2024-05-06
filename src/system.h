@@ -9,7 +9,7 @@ void system_update(PlaydateAPI *pd, float target_fps, bool draw_scenery);
 
 float system_time(void);
 float system_tick(void);
-double system_cycle_time(void);
+float system_cycle_time(void);
 void system_reset_cycle_time(void);
 
 #endif

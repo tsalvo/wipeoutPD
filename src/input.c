@@ -81,26 +81,26 @@ float input_state(uint8_t action, PlaydateAPI* pd) {
 	PDButtons released;
 	pd->system->getButtonState(&current, &pushed, &released); // buttons currently pushed, pushed last frame, released last frame
 	
-	float result = 0.0;
+	float result = 0.0F;
 	switch (action) {
 		case A_UP:
-		result = (current & kButtonUp) ? 1.0 : 0.0;
+		result = (current & kButtonUp) ? 1.0F : 0.0F;
 		break;
 		case A_DOWN:
-		result = (current & kButtonDown) ? 1.0 : 0.0;
+		result = (current & kButtonDown) ? 1.0F : 0.0F;
 		break;
 		case A_LEFT:
-		result = (current & kButtonLeft) ? 1.0 : 0.0;
+		result = (current & kButtonLeft) ? 1.0F : 0.0F;
 		break;
 		case A_RIGHT:
-		result = (current & kButtonRight) ? 1.0 : 0.0;
+		result = (current & kButtonRight) ? 1.0F : 0.0F;
 		break;
 		case A_BRAKE_LEFT:
 		break;
 		case A_BRAKE_RIGHT:
 		break;
 		case A_THRUST:
-		result = (current & kButtonA) ? 1.0 : 0.0;
+		result = (current & kButtonA) ? 1.0F : 0.0F;
 		break;
 		case A_FIRE:
 		break;
