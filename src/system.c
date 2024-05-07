@@ -34,6 +34,7 @@ void system_update(PlaydateAPI* pd, float target_fps, bool draw_scenery) {
 	
 	render_frame_prepare(pd);
 	game_update(pd, draw_scenery);
+	pd->graphics->markUpdatedRows(0, LCD_ROWS-1);
 }
 
 void system_reset_cycle_time(void) {

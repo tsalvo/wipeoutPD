@@ -95,25 +95,22 @@ void render_frame_prepare(PlaydateAPI *pd) {
 	// memset(display, kColorBlack, 240 * 52);
 }
 
-// void setpixel(int x, int y) {
-// 	// uint8_t *display = pd->graphics->getFrame();
-// 	int index = 52 * y + (x >> 3);
-// 	if (index < 240 * 52) {
-// 		uint8_t pixel = display[index];
-// 		pixel |= ((uint8_t)1 << 7 - (x & 7));
-// 		if (index < 240 * 52) {
-// 			memset(display + index, pixel, 1);
-// 		}
-// 	}
-// }
+void setPixel(int x, int y, uint8_t *display) {
+	
+	if(x < 0 || x > 399 || y < 0 || y > 239) {
+		return;
+	}
+	
+	display[(y)*52+(x)/8] |= (1 << (uint8_t)(7 - ((x) % 8)));
+}
 
 void line_bresenham(int x0, int y0, int x1, int y1, uint8_t *display) {
-	if(x0 < 0 || x0 > 399 || x1 < 0 || x1 > 399 || y0 < 0 || y0 > 239 || y1 < 0 || y1 > 239) { return; }
+	if((x0 < 0 && x1 < 0) || (x0 > 399 && x1 > 399) || (y0 < 0 && y1 < 0) || (y0 > 239 && y1 > 239)) { return; }
 	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 	int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
 	int err = (dx > dy ? dx : -dy) / 2;
 
-	while (clearpixel(display, x0, y0, 52), x0 != x1 || y0 != y1) {
+	while (setPixel(x0, y0, display), x0 != x1 || y0 != y1) {
 		int e2 = err;
 		if (e2 > -dx) { err -= dy; x0 += sx; }
 		if (e2 <  dy) { err += dx; y0 += sy; }
@@ -194,7 +191,7 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	line_bresenham(sc0.x, sc0.y, sc1.x, sc1.y, display);
 	line_bresenham(sc1.x, sc1.y, sc2.x, sc2.y, display);
 	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, display);
-	pd->graphics->markUpdatedRows(0, LCD_ROWS-1);	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, draw_color);
+	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, draw_color);
 	// pd->graphics->drawLine(sc1.x, sc1.y, sc2.x, sc2.y, 1, draw_color);
 	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, draw_color);
 }
@@ -230,7 +227,6 @@ void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
 	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, display);
 	line_bresenham(sc2.x, sc2.y, sc3.x, sc3.y, display);
 	line_bresenham(sc3.x, sc3.y, sc1.x, sc1.y, display);
-	pd->graphics->markUpdatedRows(0, LCD_ROWS-1);
 	
 	// pd->graphics->drawLine(sc0.x, sc0.y, sc1.x, sc1.y, 1, draw_color);
 	// pd->graphics->drawLine(sc2.x, sc2.y, sc0.x, sc0.y, 1, draw_color);
