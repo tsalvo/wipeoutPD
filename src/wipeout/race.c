@@ -64,7 +64,7 @@ void race_init(PlaydateAPI* pd) {
 	is_paused = false;
 }
 
-void race_update(PlaydateAPI *pd, bool draw_scenery) {
+void race_update(PlaydateAPI *pd) {
 	// if (is_paused) {
 	// 	if (!active_menu) {
 	// 		active_menu = pause_menu_init();
@@ -79,9 +79,7 @@ void race_update(PlaydateAPI *pd, bool draw_scenery) {
 		camera_update(&g.camera, &g.ships[g.pilot], &g.droid);
 		// weapons_update();
 		// particles_update();
-		if (draw_scenery) {
-			scene_update();
-		}
+		scene_update();
 		
 		if (g.race_type != RACE_TYPE_TIME_TRIAL) {
 			track_cycle_pickups();
@@ -106,9 +104,7 @@ void race_update(PlaydateAPI *pd, bool draw_scenery) {
 	render_set_view(g.camera.position, g.camera.angle);
 
 	render_set_cull_backface(false);
-	if (draw_scenery) {
-		scene_draw(&g.camera, pd);	
-	}
+	scene_draw(&g.camera, pd);	
 	track_draw(&g.camera, pd);
 	render_set_cull_backface(true);
 

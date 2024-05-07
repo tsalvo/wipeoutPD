@@ -18,7 +18,7 @@ void title_init(PlaydateAPI *pd) {
 	// sfx_music_mode(SFX_MUSIC_RANDOM);
 }
 
-void title_update(PlaydateAPI *pd, bool draw_scenery) {
+void title_update(PlaydateAPI *pd) {
 	// render_set_view_2d();
 	// render_push_2d(vec2i(0, 0), render_size(), rgba(128, 128, 128, 255), title_image);
 	ui_draw_text_centered("PRESS A", ui_scaled_pos(UI_POS_BOTTOM | UI_POS_CENTER, vec2i(0, -40), pd), UI_SIZE_8, true, pd);

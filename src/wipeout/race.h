@@ -4,7 +4,7 @@
 #include "pd_api.h"
 
 void race_init(PlaydateAPI* pd);
-void race_update(PlaydateAPI* pd, bool draw_scenery);
+void race_update(PlaydateAPI* pd);
 void race_start(void);
 void race_restart(void);
 void race_pause(void);

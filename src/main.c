@@ -16,17 +16,14 @@
 #define MAX_MUSIC_TRACKS 4
 #define TRACK_NAME_LENGTH 12
 
-PDMenuItem *optionMenuItem = NULL;
-PDMenuItem *drawSceneryMenuItem = NULL;
 PlaydateAPI* pd = NULL;
 
 static FilePlayer* fp;
-static bool draw_scenery = true;
 static int numMusicTracks = 0;
 static int currentMusicTrack = -1;
 
 static int update(void* userdata);
-static void sceneryCheckboxCallback(void* userdata);
+static void nextSongMenuItemCallback(void* userdata);
 static int determineNumberOfTracks(PlaydateAPI* playdate);
 static void playNextTrack(PlaydateAPI* pd);
 static void trackFinishedCallback(SoundSource* c, void* userdata);
@@ -49,11 +46,14 @@ int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
 		LCDFont* font = pd->graphics->loadFont("wipeoutPD", NULL);
 		pd->graphics->setFont(font);
 		
-		playdate->system->removeAllMenuItems();
-		drawSceneryMenuItem = pd->system->addCheckmarkMenuItem("Scenery", 1, sceneryCheckboxCallback, NULL);
-		
 		numMusicTracks = determineNumberOfTracks(playdate);
 		pd->system->logToConsole("numMusicTracks %d", numMusicTracks);
+		
+		playdate->system->removeAllMenuItems();
+		if (numMusicTracks > 1) {
+			PDMenuItem* songMenuItem = pd->system->addMenuItem("next song", nextSongMenuItemCallback, NULL);
+		}		
+		
 		playNextTrack(playdate);
 		
 		system_init(playdate, TARGET_FPS);
@@ -67,9 +67,9 @@ static int update(void* userdata)
 {
 	PlaydateAPI* pd = userdata;
 	
-	system_update(pd, TARGET_FPS, draw_scenery);
+	system_update(pd, TARGET_FPS);
         
-	pd->system->drawFPS(0,0);
+	// pd->system->drawFPS(0,0);
 
 	return 1;
 }
@@ -113,9 +113,13 @@ void playNextTrack(PlaydateAPI* playdate) {
 	}
 }
 
-static void sceneryCheckboxCallback(void* userdata) {
-	uint8_t newValue = (uint8_t)(pd->system->getMenuItemValue(drawSceneryMenuItem));
-	draw_scenery = newValue != 0;
+static void nextSongMenuItemCallback(void* userdata) {
+	if (fp != NULL) {
+		pd->sound->fileplayer->freePlayer(fp);
+	}
+	fp = NULL;
+	
+	playNextTrack(pd);
 }
 
 static void trackFinishedCallback(SoundSource* c, void* userdata) {

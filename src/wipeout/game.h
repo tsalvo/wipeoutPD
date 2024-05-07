@@ -245,6 +245,6 @@ extern save_t save;
 void game_init(PlaydateAPI* pd);
 void game_set_scene(game_scene_t scene);
 void game_reset_championship(void);
-void game_update(PlaydateAPI* pd, bool draw_scenery);
+void game_update(PlaydateAPI* pd);
 
 #endif

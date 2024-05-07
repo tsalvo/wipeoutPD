@@ -18,7 +18,7 @@ void system_init(PlaydateAPI* pd, float target_fps) {
 	game_init(pd);
 }
 
-void system_update(PlaydateAPI* pd, float target_fps, bool draw_scenery) {
+void system_update(PlaydateAPI* pd, float target_fps) {
 	float time_real_now = pd->system->getElapsedTime();
 	float real_delta = time_real_now - time_real;
 	time_real = time_real_now;
@@ -33,7 +33,7 @@ void system_update(PlaydateAPI* pd, float target_fps, bool draw_scenery) {
 	}
 	
 	render_frame_prepare(pd);
-	game_update(pd, draw_scenery);
+	game_update(pd);
 	pd->graphics->markUpdatedRows(0, LCD_ROWS-1);
 }
 

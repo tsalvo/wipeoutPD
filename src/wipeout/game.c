@@ -470,7 +470,7 @@ game_t g = {0};
 
 struct {
 	void (*init)(PlaydateAPI *pd);
-	void (*update)(PlaydateAPI *pd, bool draw_scenery);
+	void (*update)(PlaydateAPI *pd);
 } game_scenes[] = {
 	// [GAME_SCENE_INTRO] = {intro_init, intro_update},
 	[GAME_SCENE_TITLE] = {title_init, title_update},
@@ -512,7 +512,7 @@ void game_reset_championship(void) {
 	g.lives = NUM_LIVES;
 }
 
-void game_update(PlaydateAPI* pd, bool draw_scenery) {
+void game_update(PlaydateAPI* pd) {
 	if (scene_next != GAME_SCENE_NONE) {
 		scene_current = scene_next;
 		scene_next = GAME_SCENE_NONE;
@@ -526,7 +526,7 @@ void game_update(PlaydateAPI* pd, bool draw_scenery) {
 	}
 	
 	if (scene_current != GAME_SCENE_NONE) {
-		game_scenes[scene_current].update(pd, draw_scenery);
+		game_scenes[scene_current].update(pd);
 	}
 }
 

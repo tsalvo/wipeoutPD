@@ -4,6 +4,6 @@
 #include "pd_api.h"
 
 void main_menu_init(PlaydateAPI *pd);
-void main_menu_update(PlaydateAPI *pd, bool draw_scenery);
+void main_menu_update(PlaydateAPI *pd);
 
 #endif

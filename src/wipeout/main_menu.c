@@ -582,7 +582,7 @@ void main_menu_init(PlaydateAPI *pd) {
 	page_main_init(main_menu);
 }
 
-void main_menu_update(PlaydateAPI *pd, bool draw_scenery) {
+void main_menu_update(PlaydateAPI *pd) {
 	// render_set_view_2d();
 	// render_push_2d(vec2i(0, 0), render_size(), rgba(128, 128, 128, 255), background);
 
