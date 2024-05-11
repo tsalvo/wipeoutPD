@@ -257,7 +257,7 @@ void ship_init(ship_t *self, section_t *section, int pilot, int inv_start_rank) 
 
 	section_t *next = section->next;
 	vec3_t direction = vec3_sub(next->center, section->center);
-	self->angle.y = -atan2(direction.x, direction.z);
+	self->angle.y = -atan2f(direction.x, direction.z);
 }
 
 void ship_init_exhaust_plume(ship_t *self) {

@@ -469,7 +469,7 @@ void ship_ai_update_race(ship_t *self, PlaydateAPI *pd) {
 		self->velocity = vec3_add(self->velocity, vec3_mulf(self->acceleration, 30 * system_tick()));
 
 
-		float xy_dist = sqrt(track_target.x * track_target.x + track_target.z * track_target.z);
+		float xy_dist = sqrtf(track_target.x * track_target.x + track_target.z * track_target.z);
 
 		self->angular_velocity.x = wrap_angle(-atan2f(track_target.y, xy_dist) - self->angle.x) * (1.0F/16.0F) * 30.0F;
 		self->angular_velocity.y = (wrap_angle(-atan2f(track_target.x, track_target.z) - self->angle.y) * (1.0F/16.0F)) * 30.0F + self->turn_rate_from_hit;

@@ -146,7 +146,6 @@ void track_load_faces(char *file_name, vec3_t *vertices, PlaydateAPI *pd) {
 		tf->flags = (uint8_t)get_u16(bytes, &p);
 
 		rgba_t color = rgba_from_u32(get_u32(bytes, &p));
-		// const vec2_t *uv = track_uv[flags_is(tf->flags, FACE_FLIP_TEXTURE) ? 1 : 0];
 		tf->color = (rgb_t){.r = color.r, .g = color.g, .b = color.b};
 		tf->tris[0] = (tris_t){
 			.vertices = {v0, v1, v2}
@@ -225,7 +224,6 @@ void track_load_sections(char *file_name, PlaydateAPI *pd) {
 			}
 			face++;
 		}
-		// printf("**TS** Track Section Radius = %f\n", ts->radius);
 		ts++;
 	}
 

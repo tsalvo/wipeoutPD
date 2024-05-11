@@ -252,18 +252,18 @@ void weapon_follow_target(weapon_t *self) {
 // 	vec3_t angular_velocity = vec3(0, 0, 0);
 // 	if (self->target) {
 // 		vec3_t dir = vec3_mulf(vec3_sub(self->target->position, self->position), 0.125 * 30 * system_tick());
-// 		float height = sqrt(dir.x * dir.x + dir.z * dir.z);
-// 		angular_velocity.y = -atan2(dir.x, dir.z) - self->angle.y;
-// 		angular_velocity.x = -atan2(dir.y, height) - self->angle.x;
+// 		float height = sqrtf(dir.x * dir.x + dir.z * dir.z);
+// 		angular_velocity.y = -atan2f(dir.x, dir.z) - self->angle.y;
+// 		angular_velocity.x = -atan2f(dir.y, height) - self->angle.x;
 // 	}
 // 
 // 	angular_velocity = vec3_wrap_angle(angular_velocity);
 // 	self->angle = vec3_add(self->angle, vec3_mulf(angular_velocity, 30 * system_tick() * 0.25));
 // 	self->angle = vec3_wrap_angle(self->angle);
 // 
-// 	self->acceleration.x = -sin(self->angle.y) * cos(self->angle.x) * 256;
-// 	self->acceleration.y = -sin(self->angle.x) * 256;
-// 	self->acceleration.z = cos(self->angle.y) * cos(self->angle.x) * 256;
+// 	self->acceleration.x = -sinf(self->angle.y) * cos(self->angle.x) * 256;
+// 	self->acceleration.y = -sinf(self->angle.x) * 256;
+// 	self->acceleration.z = cosf(self->angle.y) * cos(self->angle.x) * 256;
 }
 
 ship_t *weapon_collides_with_ship(weapon_t *self) {

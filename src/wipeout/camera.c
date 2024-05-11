@@ -86,7 +86,7 @@ void camera_update_race_intro(camera_t *camera, ship_t *ship, droid_t *droid) {
 	camera->angle.x = ship->angle.x * 0.5F;
 	vec3_t target = vec3_sub(ship->position, pos);
 
-	camera->angle.y = -atan2(target.x, target.z);
+	camera->angle.y = -atan2f(target.x, target.z);
 
 	if (ship->update_timer <= UPDATE_TIME_RACE_VIEW) {
 		flags_add(ship->flags, SHIP_VIEW_INTERNAL);
@@ -113,18 +113,18 @@ void camera_update_attract_circle(camera_t *camera, ship_t *ship, droid_t *droid
 	camera->position = vec3_sub(camera->position, vec3_mulf(ship->dir_up, 256));
 
 	vec3_t target = vec3_sub(ship->position, camera->position);
-	float height = sqrt(target.x * target.x + target.z * target.z);
-	camera->angle.x = -atan2(target.y, height);
-	camera->angle.y = -atan2(target.x, target.z);
+	float height = sqrtf(target.x * target.x + target.z * target.z);
+	camera->angle.x = -atan2f(target.y, height);
+	camera->angle.y = -atan2f(target.x, target.z);
 }
 
 void camera_update_rescue(camera_t *camera, ship_t *ship, droid_t *droid) {
 	camera->position = vec3_add(camera->section->center, vec3(300, -1500, 300));
 
 	vec3_t target = vec3_sub(droid->position, camera->position);
-	float height = sqrt(target.x * target.x + target.z * target.z);
-	camera->angle.x = -atan2(target.y, height);
-	camera->angle.y = -atan2(target.x, target.z);
+	float height = sqrtf(target.x * target.x + target.z * target.z);
+	camera->angle.x = -atan2f(target.y, height);
+	camera->angle.y = -atan2f(target.x, target.z);
 }
 
 
@@ -146,9 +146,9 @@ void camera_update_static_follow(camera_t *camera, ship_t *ship, droid_t *droid)
 	}
 
 	vec3_t target = vec3_sub(ship->position, camera->position);
-	float height = sqrt(target.x * target.x + target.z * target.z);
-	camera->angle.x = -atan2(target.y, height);
-	camera->angle.y = -atan2(target.x, target.z);
+	float height = sqrtf(target.x * target.x + target.z * target.z);
+	camera->angle.x = -atan2f(target.y, height);
+	camera->angle.y = -atan2f(target.x, target.z);
 }
 
 void camera_update_attract_random(camera_t *camera, ship_t *ship, droid_t *droid) {

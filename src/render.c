@@ -22,50 +22,6 @@ static mat4_t mvp_mat = mat4_identity();
 static mat4_t projection_mat = mat4_identity();
 static mat4_t sprite_mat = mat4_identity();
 
-static LCDPattern grey25 = {
-	// Bitmap
-	0b10001000,
-	0b00100010,
-	0b10001000,
-	0b00100010,
-	0b10001000,
-	0b00100010,
-	0b10001000,
-	0b00100010,
-
-	// Mask
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-};
-
-static LCDPattern grey50 = {
-	// Bitmap
-	0b10101010,
-	0b01010101,
-	0b10101010,
-	0b01010101,
-	0b10101010,
-	0b01010101,
-	0b10101010,
-	0b01010101,
-
-	// Mask
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-	0b11111111,
-};
-
 void render_init(PlaydateAPI *pd) {
 	render_set_screen_size(pd);
 }
@@ -94,11 +50,9 @@ void render_frame_prepare(PlaydateAPI *pd) {
 }
 
 void setPixel(int x, int y, bool dithered, uint8_t *display) {
-	if (dithered && x % 2 != y % 2) {
-		return;
+	if (!dithered || x % 2 == y % 2) {
+		display[(y)*52+(x)/8] |= (1 << (uint8_t)(7 - ((x) % 8)));
 	}
-	
-	display[(y)*52+(x)/8] |= (1 << (uint8_t)(7 - ((x) % 8)));
 }
 
 void line_bresenham(int x0, int y0, int x1, int y1, bool dithered, uint8_t *display) {
