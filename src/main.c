@@ -13,7 +13,7 @@
 #include "system.h"
 
 #define TARGET_FPS 30.0F
-#define MAX_MUSIC_TRACKS 4
+#define MAX_MUSIC_TRACKS 5
 #define TRACK_NAME_LENGTH 12
 
 PlaydateAPI* pd = NULL;
@@ -32,7 +32,8 @@ static const char musicTrackNames[MAX_MUSIC_TRACKS][TRACK_NAME_LENGTH] = {
 	"Track01.pda\0",
 	"Track02.pda\0",
 	"Track03.pda\0",
-	"Track04.pda\0"
+	"Track04.pda\0",
+	"Track05.pda\0"
  };
 
 int eventHandler(PlaydateAPI* playdate, PDSystemEvent event, uint32_t arg)
