@@ -129,7 +129,7 @@ void droid_update_idle(droid_t *droid, ship_t *ship) {
 	droid->acceleration.z = (cosf(droid->angle.y) * cosf(droid->angle.x)) * 0.125F * 4096;
 
 	if (flags_is(ship->flags, SHIP_IN_RESCUE)) {
-		flags_add(droid->sfx_tractor->flags, SFX_PLAY);
+		// flags_add(droid->sfx_tractor->flags, SFX_PLAY);
 
 		droid->update_func = droid_update_rescue;
 		droid->update_timer = DROID_UPDATE_TIME_INITIAL;
@@ -186,7 +186,7 @@ void droid_update_rescue(droid_t *droid, ship_t *ship) {
 
 	// Are we done rescuing?
 	if (flags_not(ship->flags, SHIP_IN_RESCUE)) {
-		flags_rm(droid->sfx_tractor->flags, SFX_PLAY);
+		// flags_rm(droid->sfx_tractor->flags, SFX_PLAY);
 		droid->siren_started = false;
 		droid->update_func = droid_update_idle;
 		droid->update_timer = DROID_UPDATE_TIME_INITIAL;

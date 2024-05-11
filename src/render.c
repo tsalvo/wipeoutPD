@@ -4,8 +4,6 @@
 #include "utils.h"
 #include "platform.h"
 #include <stdint.h>
-#define clearpixel(data, x, y, rowbytes) (data[(y)*rowbytes+(x)/8] |= (1 << (uint8_t)(7 - ((x) % 8))))
-// #include <string.h>
 
 #define NEAR_PLANE 16.0F
 #define FAR_PLANE (RENDER_FADEOUT_FAR)

@@ -13,6 +13,7 @@
 #include "object.h"
 #include "scene.h"
 #include "game.h"
+#include "hud.h"
 #include "sfx.h"
 #include "race.h"
 #include "particle.h"
@@ -75,7 +76,7 @@ void race_update(PlaydateAPI *pd) {
 	// }
 	// else {
 		ships_update(pd);
-		// droid_update(&g.droid, &g.ships[g.pilot]);
+		droid_update(&g.droid, &g.ships[g.pilot]);
 		camera_update(&g.camera, &g.ships[g.pilot], &g.droid);
 		// weapons_update();
 		// particles_update();
@@ -112,6 +113,12 @@ void race_update(PlaydateAPI *pd) {
 	droid_draw(&g.droid, pd);
 	weapons_draw(pd);
 	particles_draw(pd);
+	
+	render_set_view_2d();
+	
+	if (flags_is(g.ships[g.pilot].flags, SHIP_RACING)) {
+		hud_draw(&g.ships[g.pilot], pd);
+	}
 }
 
 void race_start(void) {
