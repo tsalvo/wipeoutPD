@@ -26,6 +26,7 @@ Assets should be placed in the `/Source` directory, for example:
 ./Source/Track05.wav # optional background music 5
 ./Source/wipeout/common/allsh.prm # ships
 ./Source/wipeout/common/alcol.prm # collision
+./Source/wipeout/common/rescu.prm # droid
 ./Source/wipeout/track01/track.trv # track 01 vertices
 ./Source/wipeout/track01/track.trf # track 01 faces
 ./Source/wipeout/track01/track.trs # track 01 sections
