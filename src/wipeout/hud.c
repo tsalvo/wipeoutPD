@@ -162,10 +162,10 @@ void hud_draw(ship_t *ship, PlaydateAPI *pd) {
 	int display_lap = max(0, ship->lap + 1);
 	
 	ui_draw_text("LAP", vec2i(4, 8), /*ui_scaled(vec2i(15, 8)),*/ UI_SIZE_8, true, pd); 
-	ui_draw_number(display_lap, vec2i(60, 8),/*ui_scaled(vec2i(10, 19)),*/ UI_SIZE_16, true, pd); 
+	ui_draw_number(display_lap, vec2i(62, 8),/*ui_scaled(vec2i(10, 19)),*/ UI_SIZE_16, true, pd); 
 	// int width = ui_char_width('0' + display_lap, UI_SIZE_16);
-	ui_draw_text("OF", vec2i(87, 8), /*ui_scaled(vec2i((10 + width), 27))*/ UI_SIZE_8, true, pd);
-	ui_draw_number(NUM_LAPS, vec2i(134, 8), /*ui_scaled(vec2i((32 + width), 19))*/ UI_SIZE_16, true, pd);
+	ui_draw_text("/", vec2i(80, 8), /*ui_scaled(vec2i((10 + width), 27))*/ UI_SIZE_8, true, pd);
+	ui_draw_number(NUM_LAPS, vec2i(97, 8), /*ui_scaled(vec2i((32 + width), 19))*/ UI_SIZE_16, true, pd);
 
 	// Race Position
 	if (g.race_type != RACE_TYPE_TIME_TRIAL) {
