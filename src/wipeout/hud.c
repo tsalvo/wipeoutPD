@@ -76,7 +76,7 @@ static void hud_draw_speedo_bar(vec2i_t *pos, const speedo_bar_t *a, const speed
 			{pos->x + bottom_right.x, pos->y + bottom_right.y, 0},
 			{pos->x + bottom_left.x, pos->y + bottom_left.y, 0},
 		}
-	}, pd);
+	}, false, pd);
 }
 
 static void hud_draw_speedo_bars(vec2i_t *pos, float f, PlaydateAPI *pd) {

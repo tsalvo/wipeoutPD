@@ -132,7 +132,7 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, dithered, display);
 }
 
-void render_push_quad(quad_t quad, PlaydateAPI *pd) {
+void render_push_quad(quad_t quad, bool accent, PlaydateAPI *pd) {
 	vec3_t p0 = vec3_transform(quad.vertices[0], &mvp_mat);
 	vec3_t p1 = vec3_transform(quad.vertices[1], &mvp_mat);
 	vec3_t p2 = vec3_transform(quad.vertices[2], &mvp_mat);
@@ -147,7 +147,7 @@ void render_push_quad(quad_t quad, PlaydateAPI *pd) {
 	vec2i_t sc3 = vec2i(p3.x * screen_w2 + screen_w2, screen_h2 - p3.y * screen_h2);
 	
 	float avg_z = (p0.z + p1.z + p2.z + p3.z) * 0.25F;
-	bool dithered = avg_z > 0.9952F;
+	bool dithered = avg_z > (accent ? 0.9993F : 0.9952F);
 	uint8_t *display = pd->graphics->getFrame();
 	line_bresenham(sc0.x, sc0.y, sc1.x, sc1.y, dithered, display);
 	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, dithered, display);

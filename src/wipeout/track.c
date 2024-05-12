@@ -245,7 +245,7 @@ void track_draw_section(section_t *section, PlaydateAPI *pd) {
 				face->tris[1].vertices[0],
 				face->tris[1].vertices[2],
 			}
-		}, pd);
+		}, true, pd);
 		
 		face++;
 	}
