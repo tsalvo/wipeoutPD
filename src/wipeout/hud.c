@@ -69,18 +69,11 @@ static void hud_draw_speedo_bar(vec2i_t *pos, const speedo_bar_t *a, const speed
 	top_right    = ui_scaled(top_right);
 	bottom_right = ui_scaled(bottom_right);
 
-	render_push_tris((tris_t) {
+	render_push_tris_pair((tris_pair_t) {
 		.vertices = {
-			{pos->x + bottom_left.x, pos->y + bottom_left.y, 0},
 			{pos->x + top_right.x, pos->y + top_right.y, 0},
 			{pos->x + top_left.x, pos->y + top_left.y, 0},
-		}
-	}, pd);
-	
-	render_push_tris((tris_t) {
-		.vertices = {
 			{pos->x + bottom_right.x, pos->y + bottom_right.y, 0},
-			{pos->x + top_right.x, pos->y + top_right.y, 0},
 			{pos->x + bottom_left.x, pos->y + bottom_left.y, 0},
 		}
 	}, pd);
