@@ -132,11 +132,11 @@ void render_push_tris(tris_t tris, PlaydateAPI *pd) {
 	line_bresenham(sc2.x, sc2.y, sc0.x, sc0.y, dithered, display);
 }
 
-void render_push_tris_pair(tris_pair_t tris_pair, PlaydateAPI *pd) {
-	vec3_t p0 = vec3_transform(tris_pair.vertices[0], &mvp_mat);
-	vec3_t p1 = vec3_transform(tris_pair.vertices[1], &mvp_mat);
-	vec3_t p2 = vec3_transform(tris_pair.vertices[2], &mvp_mat);
-	vec3_t p3 = vec3_transform(tris_pair.vertices[3], &mvp_mat);
+void render_push_quad(quad_t quad, PlaydateAPI *pd) {
+	vec3_t p0 = vec3_transform(quad.vertices[0], &mvp_mat);
+	vec3_t p1 = vec3_transform(quad.vertices[1], &mvp_mat);
+	vec3_t p2 = vec3_transform(quad.vertices[2], &mvp_mat);
+	vec3_t p3 = vec3_transform(quad.vertices[3], &mvp_mat);
 	if (p0.z >= 1.0F || p1.z >= 1.0F || p2.z >= 1.0F || p3.z >= 1.0F) {
 		return;
 	}
