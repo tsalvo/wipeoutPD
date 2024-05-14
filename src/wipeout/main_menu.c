@@ -168,18 +168,18 @@ void button_capture(void *user, button_t button, int32_t ascii_char) {
 }
 
 static void page_options_control_set_draw(menu_t *menu, int data, PlaydateAPI *pd) {
-	float remaining = await_input_deadline - pd->system->getElapsedTime();
-
-	menu_page_t *page = &menu->pages[menu->index];
-	char remaining_text[2] = { '0' + (uint8_t)clamp(remaining + 1, 0, 3), '\0'};
-	vec2i_t pos = vec2i(page->items_pos.x, page->items_pos.y + 24);
-	ui_draw_text_centered(remaining_text, ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_16, true, pd);
-
-	if (remaining <= 0) {
-		input_capture(NULL, NULL);
-		menu_pop(menu);
-		return;
-	}
+// 	float remaining = await_input_deadline - pd->system->getElapsedTime();
+// 
+// 	menu_page_t *page = &menu->pages[menu->index];
+// 	char remaining_text[2] = { '0' + (uint8_t)clamp(remaining + 1, 0, 3), '\0'};
+// 	vec2i_t pos = vec2i(page->items_pos.x, page->items_pos.y + 24);
+// 	ui_draw_text_centered(remaining_text, ui_scaled_pos(page->items_anchor, pos, pd), UI_SIZE_16, true, pd);
+// 
+// 	if (remaining <= 0) {
+// 		input_capture(NULL, NULL);
+// 		menu_pop(menu);
+// 		return;
+// 	}
 }
 
 static void page_options_controls_set_init(menu_t *menu, int data) {
