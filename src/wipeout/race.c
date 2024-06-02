@@ -98,6 +98,14 @@ void race_update(PlaydateAPI *pd) {
 		// else if (active_menu == NULL && (input_pressed(A_MENU_START) || input_pressed(A_MENU_QUIT))) {
 		// 	race_pause();
 		// }
+		else if (!flags_is(g.ships[g.pilot].flags, SHIP_RACING) && input_pressed(A_MENU_SELECT, pd)) { // TODO: support in-game menu?
+			if (g.race_type == RACE_TYPE_CHAMPIONSHIP) {
+				race_next();
+			}
+			else {
+				game_set_scene(GAME_SCENE_MAIN_MENU);
+			}
+		}
 	// }
 
 
@@ -209,7 +217,7 @@ void race_end(void) {
 		sort(g.championship_ranks, len(g.championship_ranks), sort_points_compare);
 	}
 
-	// active_menu = race_stats_menu_init();
+	// active_menu = race_stats_menu_init(); // TODO: support in-game menus
 }
 
 void race_next(void) {
